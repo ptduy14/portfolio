@@ -1,5 +1,5 @@
-import Avata from "./avata";
-import WelcomeQuotes from "./welcome-quote";
+import Avata from "./Avata";
+import WelcomeQuotes from "./WelcomeQuote";
 
 export default function Header() {
   return (

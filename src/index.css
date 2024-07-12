@@ -7,5 +7,7 @@
 #docs-root {
   --primary-color: #191E2A;
   --secondary-color: #222A38;
+  --tertiary-color: #121622;
+  --hover-color: #0A1222;
   --text-color: #9dc7e0;
 }
