@@ -24,11 +24,6 @@ export default function Content() {
       left: navbarItemList[obj.index].offsetLeft,
       width: navbarItemList[obj.index].offsetWidth,
     });
-
-    console.log({
-      left: navbarItemList[obj.index].offsetLeft,
-      width: navbarItemList[obj.index].offsetWidth,
-    });
   };
 
   return (

@@ -1,5 +1,3 @@
-import { convertPxToRem } from "../../../utils/convertUtils";
-
 export default function Navbar({ navbarContainerRef, positionActiveLine, handleSwitchContent }) {
   return (
     <ul className="flex relative" ref={navbarContainerRef}>
@@ -19,8 +17,8 @@ export default function Navbar({ navbarContainerRef, positionActiveLine, handleS
       <div
         className={`block absolute transition-all duration-500 ease h-full bottom-0 bg-[#1F4962] opacity-20`}
         style={{
-          left: `${convertPxToRem(positionActiveLine.left)}rem`,
-          width: `${convertPxToRem(positionActiveLine.width)}rem`,
+          left: `${positionActiveLine.left}px`,
+          width: `${positionActiveLine.width + 1}px`,
         }}
       ></div>
     </ul>
