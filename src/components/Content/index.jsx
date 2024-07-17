@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Navbar from "./Navbar";
 import Bio from "./SubContent/Bio";
+import Skill from "./SubContent/Skill";
 
 export default function Content() {
   const [positionActiveLine, setPositionActiveLine] = useState({
@@ -8,6 +9,7 @@ export default function Content() {
     width: 0,
   });
   const [navbarItemList, setNavbarItemList] = useState([]);
+  const [currentContent, setCurrentContent] = useState("Bio");
   const navbarContainerRef = useRef(null);
 
   useEffect(() => {
@@ -24,7 +26,21 @@ export default function Content() {
       left: navbarItemList[obj.index].offsetLeft,
       width: navbarItemList[obj.index].offsetWidth,
     });
+
+    setCurrentContent(obj.content);
   };
+
+  const handleRenderCurrentContent = () => {
+    switch (currentContent) {
+      case "Skill":
+        return <Skill />
+        break;
+    
+      default:
+        return <Bio />
+        break;
+    }
+  }
 
   return (
     <div className="mt-12">
@@ -34,7 +50,7 @@ export default function Content() {
         handleSwitchContent={handleSwitchContent}
       />
       <div className="p-5 h-[22.563rem] bg-secondary-color">
-        <Bio />
+        {handleRenderCurrentContent()}
       </div>
     </div>
   );
