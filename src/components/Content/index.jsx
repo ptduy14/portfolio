@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Navbar from "./Navbar";
 import Bio from "./SubContent/Bio";
 import Skill from "./SubContent/Skill";
+import Project from "./SubContent/Project";
 
 export default function Content() {
   const [positionActiveLine, setPositionActiveLine] = useState({
@@ -35,7 +36,10 @@ export default function Content() {
       case "Skill":
         return <Skill />
         break;
-    
+      
+      case "Project":
+        return <Project />
+        break;
       default:
         return <Bio />
         break;
