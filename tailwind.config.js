@@ -9,6 +9,7 @@ module.exports = {
         "tertiary-color": "var(--tertiary-color)",
         "hover-color": "var(--hover-color)",
         "text-color": "var(--text-color)",
+        "text-color-error": "var(--text-color-error)",
       },
     },
   },

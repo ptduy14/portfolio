@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import Bio from "./SubContent/Bio";
 import Skill from "./SubContent/Skill";
 import Project from "./SubContent/Project";
+import Contact from "./SubContent/Contact";
 
 export default function Content() {
   const [positionActiveLine, setPositionActiveLine] = useState({
@@ -34,17 +35,22 @@ export default function Content() {
   const handleRenderCurrentContent = () => {
     switch (currentContent) {
       case "Skill":
-        return <Skill />
+        return <Skill />;
         break;
-      
+
       case "Project":
-        return <Project />
+        return <Project />;
         break;
+
+      case "Contact":
+        return <Contact />;
+        break;
+
       default:
-        return <Bio />
+        return <Bio />;
         break;
     }
-  }
+  };
 
   return (
     <div className="mt-12">

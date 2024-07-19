@@ -18,7 +18,7 @@ export default function Navbar({ navbarContainerRef, positionActiveLine, handleS
         className={`block absolute transition-all duration-500 ease h-full bottom-0 bg-[#1F4962] opacity-20`}
         style={{
           left: `${positionActiveLine.left}px`,
-          width: `${positionActiveLine.width + 1}px`,
+          width: `${positionActiveLine.width}px`,
         }}
       ></div>
     </ul>
