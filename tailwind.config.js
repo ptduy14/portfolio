@@ -11,6 +11,10 @@ module.exports = {
         "text-color": "var(--text-color)",
         "text-color-error": "var(--text-color-error)",
       },
+
+      boxShadow: {
+        'custom': 'rgba(79, 86, 89, 0.2) 0px 8px 24px'
+      }
     },
   },
   plugins: [],
