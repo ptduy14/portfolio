@@ -11,7 +11,7 @@ export default function Project() {
           <a href={project.github} className="space-y-2">
             <h4 className="text-lg font-bold">{project.name}</h4>
             <p>{project.description}</p>
-            <p>Technologies: {project.technologies.split(", ").map((technology, index) => (<span key={index} className="inline-block ml-[0.1875rem] py-[0.1875rem] px-2.5 bg-tertiary-color text-sm rounded-xl">{technology}</span>))}</p>
+            <div className="flex flex-wrap gap-y-1"><span className="hidden lg:block">Technologies:</span> {project.technologies.split(", ").map((technology, index) => (<span key={index} className="inline-block ml-[0.1875rem] py-[0.1875rem] px-2.5 bg-tertiary-color text-sm rounded-xl">{technology}</span>))}</div>
           </a>
         </div>
       ))}

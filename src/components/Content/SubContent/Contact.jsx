@@ -77,14 +77,14 @@ export default function Contact() {
 
   return (
     <div className="flex">
-      <div className="w-1/2">
+      <div className="w-full lg:w-1/2">
         <form ref={form} onSubmit={handleSubmit} className="space-y-1">
           <div>
             <input
               type="text"
               name="user_name"
               placeholder="Your name"
-              className={`w-3/4 p-3 border-solid border-transparent border-2 outline-none text-sm bg-[#121622] ${
+              className={`w-full lg:w-3/4 p-3 border-solid border-transparent border-2 outline-none text-sm bg-[#121622] ${
                 error.user_name && "border-[#9d0808] border-[0.0625rem]"
               }`}
               value={input.user_name}
@@ -102,7 +102,7 @@ export default function Contact() {
               type="text"
               name="user_email"
               placeholder="Your Email"
-              className={`w-3/4 p-3 border-solid border-transparent border-2 outline-none text-sm bg-[#121622] ${
+              className={`w-full lg:w-3/4 p-3 border-solid border-transparent border-2 outline-none text-sm bg-[#121622] ${
                 error.user_email && "border-[#9d0808] border-[0.0625rem]"
               }`}
               value={input.user_email}
@@ -117,7 +117,7 @@ export default function Contact() {
           </div>
           <div>
             <textarea
-              className={`resize-none text-sm bg-[#121622] p-2.5 outline-none ${
+              className={`w-full lg:w-auto resize-none text-sm bg-[#121622] p-2.5 outline-none ${
                 error.message || "mb-2"
               }`}
               name="message"
@@ -163,7 +163,7 @@ export default function Contact() {
           </button>
         </form>
       </div>
-      <div className="w-1/2 pl-10 space-y-3">
+      <div className="hidden lg:block w-1/2 pl-10 space-y-3">
         <div className="flex items-center text-lg gap-x-3">
           <Icon iconType={EmailIcon} roundedType="xl" />
           <p>phantanduy14@gmail.com</p>
