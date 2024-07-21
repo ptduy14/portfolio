@@ -13,7 +13,7 @@ export default function ToastProvider({ children }) {
     setTimeout(() => {
         if (isShowing) return;
         setIsShowing(false);
-    }, 3000)
+    }, 5000)
   };
 
   const handleClosingToast = () => {
