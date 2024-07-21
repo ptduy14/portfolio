@@ -22,7 +22,7 @@ const projects = [
   },
 
   {
-    name: "Laravel API",
+    name: "ChaiiTea Shop",
     description:
       "Developed a user-friendly e-commerce website using Laravel Framework",
     technologies: "Laravel, AJAX, JS, HTML/CSS",
