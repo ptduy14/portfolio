@@ -4,6 +4,7 @@ import Content from "./components/Content";
 import Toast from "./common/Toast"
 import { useContext } from "react";
 import { ToastContext } from "./context/ToastContext";
+import Footer from "./components/Footer";
 
 function App() {
   const {isShowing} = useContext(ToastContext)
@@ -13,6 +14,7 @@ function App() {
     <div className="container w-[90%] lg:w-[70%] mx-auto my-14">
       <Header />
       <Content />
+      <Footer />
     </div>
   </div>;
 }
