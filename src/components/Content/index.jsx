@@ -4,6 +4,7 @@ import Bio from "./SubContent/Bio";
 import Skill from "./SubContent/Skill";
 import Project from "./SubContent/Project";
 import Contact from "./SubContent/Contact";
+import Chatbot from "./SubContent/Chatbot";
 
 export default function Content() {
   const [positionActiveLine, setPositionActiveLine] = useState({
@@ -34,7 +35,7 @@ export default function Content() {
 
   useEffect(() => {
     document.title = currentContent;
-  }, [currentContent])
+  }, [currentContent]);
 
   const handleRenderCurrentContent = () => {
     switch (currentContent) {
@@ -44,6 +45,10 @@ export default function Content() {
 
       case "Project":
         return <Project />;
+        break;
+
+      case "Chatbot":
+        return <Chatbot />;
         break;
 
       case "Contact":

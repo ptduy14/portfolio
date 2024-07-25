@@ -1,7 +1,7 @@
 export default function Navbar({ navbarContainerRef, positionActiveLine, handleSwitchContent }) {
   return (
     <ul className="flex relative" ref={navbarContainerRef}>
-      {["Bio", "Skill", "Project", "Contact"].map(
+      {["Bio", "Skill", "Project", "Chatbot", "Contact"].map(
         (item, index) => {
           return (
             <li
