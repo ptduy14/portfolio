@@ -33,7 +33,7 @@ export default function Content() {
   };
 
   useEffect(() => {
-    document.title = currentContent;
+    document.title = currentContent
   }, [currentContent])
 
   const handleRenderCurrentContent = () => {
