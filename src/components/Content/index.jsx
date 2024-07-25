@@ -32,6 +32,10 @@ export default function Content() {
     setCurrentContent(obj.content);
   };
 
+  useEffect(() => {
+    document.title = currentContent;
+  }, [currentContent])
+
   const handleRenderCurrentContent = () => {
     switch (currentContent) {
       case "Skill":
