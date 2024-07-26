@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Bio from "./SubContent/Bio";
 import Skill from "./SubContent/Skill";
@@ -41,8 +41,7 @@ export default function Content() {
   return (
     <div className="mt-12">
       <Navbar setCurrentContent={setCurrentContent} />
-
-      {/* <NavbarMobile /> */}
+      <NavbarMobile setCurrentContent={setCurrentContent} currentContent={currentContent}/>
 
       <div className="p-5 h-[22.563rem] bg-secondary-color">
         {handleRenderCurrentContent()}
