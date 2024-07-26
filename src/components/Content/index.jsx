@@ -5,33 +5,10 @@ import Skill from "./SubContent/Skill";
 import Project from "./SubContent/Project";
 import Contact from "./SubContent/Contact";
 import Chatbot from "./SubContent/Chatbot";
+import NavbarMobile from "./Navbar/NavbarMobile";
 
 export default function Content() {
-  const [positionActiveLine, setPositionActiveLine] = useState({
-    left: 0,
-    width: 0,
-  });
-  const [navbarItemList, setNavbarItemList] = useState([]);
   const [currentContent, setCurrentContent] = useState("Bio");
-  const navbarContainerRef = useRef(null);
-
-  useEffect(() => {
-    let nodeList = navbarContainerRef.current.querySelectorAll("li");
-    setNavbarItemList(nodeList);
-    setPositionActiveLine({
-      left: nodeList[0].offsetLeft,
-      width: nodeList[0].offsetWidth,
-    });
-  }, []);
-
-  const handleSwitchContent = (obj) => {
-    setPositionActiveLine({
-      left: navbarItemList[obj.index].offsetLeft,
-      width: navbarItemList[obj.index].offsetWidth,
-    });
-
-    setCurrentContent(obj.content);
-  };
 
   useEffect(() => {
     document.title = currentContent;
@@ -63,11 +40,10 @@ export default function Content() {
 
   return (
     <div className="mt-12">
-      <Navbar
-        navbarContainerRef={navbarContainerRef}
-        positionActiveLine={positionActiveLine}
-        handleSwitchContent={handleSwitchContent}
-      />
+      <Navbar setCurrentContent={setCurrentContent} />
+
+      {/* <NavbarMobile /> */}
+
       <div className="p-5 h-[22.563rem] bg-secondary-color">
         {handleRenderCurrentContent()}
       </div>
