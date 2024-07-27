@@ -4,12 +4,15 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import ToastProvider from "./context/ToastContext";
+import ChatbotProvider from "./context/ChatbotContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <ToastProvider>
-      <App />
+      <ChatbotProvider>
+        <App />
+      </ChatbotProvider>
     </ToastProvider>
   </React.StrictMode>
 );
