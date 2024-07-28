@@ -1,49 +1,74 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import BotMessage from "../../../common/BotMessage";
 import UserMessage from "../../../common/UserMessage";
 import chatbotPreviewService from "../../../services/chatbotPreviewService";
 import ButtonInput from "../../../common/ButtonInput";
+import { ChatbotContext } from "../../../context/ChatbotContext";
+import {
+  setBotMessage,
+  setButtonsInput,
+  setSession,
+  setUserMessage,
+} from "../../../reducer/actions";
+import WaitingMessage from "../../../common/WaitingMessage";
 
 export default function Chatbot() {
-  const [messages, setMessages] = useState([]);
-  const [buttonsInput, setButtonsInput] = useState([]);
+  const { chatbot, dispatch } = useContext(ChatbotContext);
+  const [isWaitingMessage, setIsWaitingMessage] = useState(false);
 
   useEffect(() => {
-    const sessionId = localStorage.getItem("sessionId");
-    if (sessionId) {
-      handleContinueChat();
-    } else {
+    if (!chatbot.sessionId && chatbot.messages.length === 0) {
       handleStartChat();
     }
   }, []);
 
   const handleStartChat = async () => {
     const data = await chatbotPreviewService.startChat();
-    setMessages((prev) => ([
-      ...prev,
-      {
-        type: 'bot',
-        message: data.messages[0].content.richText[0].children[0].text
-      }
-    ]));
-    setButtonsInput(data.input.items);
-    console.log(data);
+    dispatch(setSession(data.sessionId));
+    dispatch(
+      setBotMessage(data.messages[0].content.richText[0].children[0].text)
+    );
+    dispatch(setButtonsInput(data.input.items));
   };
 
-  const handleContinueChat = async () => {
-    const data = await chatbotPreviewService.continueChat();
-    console.log(data);
+  const handleSubmitMessage = async (content) => {
+    setIsWaitingMessage(true);
+
+    try {
+      dispatch(setUserMessage(content));
+      const data = await chatbotPreviewService.continueChat(
+        chatbot.sessionId,
+        content
+      );
+      dispatch(
+        setBotMessage(data.messages[0].content.richText[0].children[0].text)
+      );
+      dispatch(setButtonsInput(data.input.items));
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsWaitingMessage(false);
+    }
   };
 
-  console.log(buttonsInput)
+  console.log(isWaitingMessage);
 
   return (
-    <div className="h-full w-full bg-primary-color rounded-md p-8 space-y-2 relative overflow-y-scroll">
-      {messages.map((message, index) => {
-        if (message.type === 'bot') return <BotMessage key={index} message={message.message}/> 
-        return <UserMessage key={index} message={message.message} />
+    <div className="h-full w-full bg-primary-color rounded-md p-4 md:p-8 space-y-2 relative overflow-y-scroll">
+      {chatbot.messages.map((message, index) => {
+        if (message.type === "bot") {
+          return <BotMessage key={index} message={message.text} />;
+        }
+        return <UserMessage key={index} message={message.text} />;
       })}
-      <ButtonInput buttonsInput={buttonsInput} />
+
+      {isWaitingMessage || (
+        <ButtonInput
+          buttonsInput={chatbot.buttonsInput}
+          handleSubmitMessage={handleSubmitMessage}
+        />
+      )}
+      {isWaitingMessage && <WaitingMessage />}
     </div>
   );
 }

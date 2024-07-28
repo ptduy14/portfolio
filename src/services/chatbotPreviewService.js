@@ -1,4 +1,12 @@
-import createOptions from "../utils/createOptions";
+export function createOptions(text = "") {
+  return {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${process.env.REACT_APP_TOKEN}`},
+    body: JSON.stringify({
+      message: { type: "text", text: text },
+    }),
+  };
+}
 
 const chatbotPreviewService = {
   startChat: async () => {
@@ -11,9 +19,8 @@ const chatbotPreviewService = {
     return data;
   },
 
-  continueChat: async () => {
-    const options = createOptions();
-    const sessionId = localStorage.getItem("sessionId");
+  continueChat: async (sessionId, message) => {
+    const options = createOptions(message);
     const response = await fetch(
       `https://typebot.io/api/v1/sessions/${sessionId}/continueChat`,
       options
