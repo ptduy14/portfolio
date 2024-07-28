@@ -1,6 +1,7 @@
 export default function ButtonInput({ buttonsInput, handleSubmitMessage }) {
   return (
-    <div className="flex gap-y-2 justify-end text-[#fff] font-semibold gap-x-2 flex-wrap">
+   
+      <div className="flex gap-y-2 float-right justify-end text-[#fff] font-semibold gap-x-2 flex-wrap w-[80%]">
       {buttonsInput.map((buttonInput, index) => (
         <div
           key={index}
@@ -11,5 +12,7 @@ export default function ButtonInput({ buttonsInput, handleSubmitMessage }) {
         </div>
       ))}
     </div>
+
+    
   );
 }
