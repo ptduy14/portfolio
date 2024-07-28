@@ -52,7 +52,7 @@ export default function Chatbot() {
   };
 
   return (
-    <div className="h-full w-full bg-primary-color rounded-md p-4 md:p-8 space-y-2 relative overflow-y-scroll">
+    <div className="h-full w-full bg-primary-color rounded-md p-4 md:p-8 space-y-4 relative overflow-y-scroll">
       {chatbot.messages.map((message, index) => {
         if (message.type === "bot") {
           return <BotMessage key={index} message={message.text}/>;
