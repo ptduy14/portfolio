@@ -1,14 +1,72 @@
+import { useContext, useEffect, useState } from "react";
 import BotMessage from "../../../common/BotMessage";
 import UserMessage from "../../../common/UserMessage";
+import chatbotPreviewService from "../../../services/chatbotPreviewService";
+import ButtonInput from "../../../common/ButtonInput";
+import { ChatbotContext } from "../../../context/ChatbotContext";
+import {
+  setBotMessage,
+  setButtonsInput,
+  setSession,
+  setUserMessage,
+} from "../../../reducer/actions";
+import WaitingMessage from "../../../common/WaitingMessage";
 
 export default function Chatbot() {
+  const { chatbot, dispatch } = useContext(ChatbotContext);
+  const [isWaitingMessage, setIsWaitingMessage] = useState(false);
+
+  useEffect(() => {
+    if (!chatbot.sessionId && chatbot.messages.length === 0) {
+      handleStartChat();
+    }
+  }, []);
+
+  const handleStartChat = async () => {
+    const data = await chatbotPreviewService.startChat();
+    dispatch(setSession(data.sessionId));
+    dispatch(
+      setBotMessage(data.messages[0].content.richText[0].children[0].text)
+    );
+    dispatch(setButtonsInput(data.input.items));
+  };
+
+  const handleSubmitMessage = async (content) => {
+    setIsWaitingMessage(true);
+
+    try {
+      dispatch(setUserMessage(content));
+      const data = await chatbotPreviewService.continueChat(
+        chatbot.sessionId,
+        content
+      );
+      dispatch(
+        setBotMessage(data.messages[0].content.richText[0].children[0].text)
+      );
+      dispatch(setButtonsInput(data.input.items));
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsWaitingMessage(false);
+    }
+  };
+
   return (
-    <div className="h-full w-full bg-primary-color rounded-md p-8 space-y-4 relative">
-      <BotMessage />
-      <UserMessage />
-      <div className="h-24 w-full bg-tertiary-color absolute bottom-0 left-0 flex justify-center items-center text-lg font-bold text-center">
-        This function is in development 🧑‍💻
-      </div>
+    <div className="h-full w-full bg-primary-color rounded-md p-4 md:p-8 space-y-2 relative overflow-y-scroll">
+      {chatbot.messages.map((message, index) => {
+        if (message.type === "bot") {
+          return <BotMessage key={index} message={message.text}/>;
+        }
+        return <UserMessage key={index} message={message.text} />;
+      })}
+
+      {isWaitingMessage || (
+        <ButtonInput
+          buttonsInput={chatbot.buttonsInput}
+          handleSubmitMessage={handleSubmitMessage}
+        />
+      )}
+      {isWaitingMessage && <WaitingMessage />}
     </div>
   );
 }
