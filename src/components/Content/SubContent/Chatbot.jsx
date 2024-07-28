@@ -51,13 +51,11 @@ export default function Chatbot() {
     }
   };
 
-  console.log(isWaitingMessage);
-
   return (
     <div className="h-full w-full bg-primary-color rounded-md p-4 md:p-8 space-y-2 relative overflow-y-scroll">
       {chatbot.messages.map((message, index) => {
         if (message.type === "bot") {
-          return <BotMessage key={index} message={message.text} />;
+          return <BotMessage key={index} message={message.text}/>;
         }
         return <UserMessage key={index} message={message.text} />;
       })}
