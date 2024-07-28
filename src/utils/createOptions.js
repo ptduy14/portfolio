@@ -1,4 +1,4 @@
-export default function createOptions(text = "") {
+export function createOptions(text = "") {
   return {
     method: "POST",
     headers: { "Content-Type": "application/json", "Authorization": `Bearer ${process.env.REACT_APP_TOKEN}`},
