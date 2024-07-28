@@ -26,4 +26,11 @@ const setButtonsInput = (buttonsInput) => {
   };
 };
 
-export { setSession, setBotMessage, setButtonsInput, setUserMessage };
+const setChatInitialized = (isChatInitialized) => {
+  return {
+    type: "set_chat_initialized",
+    isChatInitialized,
+  };
+};
+
+export { setSession, setBotMessage, setButtonsInput, setUserMessage, setChatInitialized };

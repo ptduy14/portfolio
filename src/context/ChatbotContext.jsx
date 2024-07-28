@@ -7,7 +7,8 @@ export default function ChatbotProvider({ children }) {
     const initialState = {
         sessionId: null,
         messages: [],
-        buttonsInput: []
+        buttonsInput: [],
+        isChatInitialized: false
     }
 
     const [chatbot, dispatch] = useReducer(chatbotReducer, initialState);
