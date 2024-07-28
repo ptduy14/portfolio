@@ -28,6 +28,20 @@ const projects = [
     technologies: "Laravel, AJAX, JS, HTML/CSS",
     github: "https://github.com/ptduy14/chaaitea-laravel",
   },
+  {
+    name: "Leaflet Mini Project",
+    description:
+      "Mini project to restructure knowledge, how to use markers, popups, calculate distance on 2 markers using Leaflet",
+    technologies: "JS, Leaflet, HTML/CSS",
+    github: "https://github.com/ptduy14/leaflet-mini-example",
+  },
+  {
+    name: "Barcalona Landing Page",
+    description:
+      "This project is a clone of the Barcalona landing page, with several enhancements to improve the user experience and visual appeal",
+    technologies: "JS, HTML/CSS",
+    github: "https://ptduy14.github.io/barcelona-template/index/home.html",
+  },
 ];
 
 export default projects;

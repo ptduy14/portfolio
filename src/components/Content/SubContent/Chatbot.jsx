@@ -7,10 +7,12 @@ import { ChatbotContext } from "../../../context/ChatbotContext";
 import {
   setBotMessage,
   setButtonsInput,
+  setChatInitialized,
   setSession,
   setUserMessage,
 } from "../../../reducer/actions";
 import WaitingMessage from "../../../common/WaitingMessage";
+import ChatInitializing from "../../../common/ChatInitializing";
 
 export default function Chatbot() {
   const { chatbot, dispatch } = useContext(ChatbotContext);
@@ -19,6 +21,7 @@ export default function Chatbot() {
   useEffect(() => {
     if (!chatbot.sessionId && chatbot.messages.length === 0) {
       handleStartChat();
+      dispatch(setChatInitialized(true));
     }
   }, []);
 
@@ -51,11 +54,15 @@ export default function Chatbot() {
     }
   };
 
+  if (!chatbot.isChatInitialized) {
+    return <ChatInitializing />;
+  }
+
   return (
     <div className="h-full w-full bg-primary-color rounded-md p-4 md:p-8 space-y-4 relative overflow-y-scroll">
       {chatbot.messages.map((message, index) => {
         if (message.type === "bot") {
-          return <BotMessage key={index} message={message.text}/>;
+          return <BotMessage key={index} message={message.text} />;
         }
         return <UserMessage key={index} message={message.text} />;
       })}

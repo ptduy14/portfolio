@@ -38,6 +38,13 @@ export default function chatbotReducer(state, action) {
         buttonsInput: action.buttonsInput,
       };
       break;
+
+    case "set_chat_initialized": 
+      return {
+        ...state,
+        isChatInitialized: action.isChatInitialized
+      }
+      break;
       
     default:
       break;
