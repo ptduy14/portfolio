@@ -6,6 +6,7 @@ import PhoneIcon from "../../Icons/PhoneIcon";
 import GithubIcon from "../../Icons/GithubIcon";
 import emailjs from "@emailjs/browser";
 import { ToastContext } from "../../../context/ToastContext";
+import resume from "../../../assets/resume/resume.pdf"
 
 export default function Contact() {
   const { handleShowingToast } = useContext(ToastContext);
@@ -74,6 +75,10 @@ export default function Contact() {
       [inputName]: isEmty(value),
     }));
   };
+
+  const onOpenResume = () => {
+    window.open(resume)
+  }
 
   return (
     <div className="flex">
@@ -175,6 +180,11 @@ export default function Contact() {
         <div className="flex items-center text-lg gap-x-3">
           <Icon iconType={GithubIcon} roundedType="xl" />
           <p>https://github.com/ptduy14 </p>
+        </div>
+        <div className="flex items-center text-lg gap-x-3">
+          <button onClick={onOpenResume} className="bg-tertiary-color px-8 py-2 rounded-md hover:bg-[#2d3f6a] hover:text-[#d6d3cd] transition-all duration-700">
+            My Resume
+          </button>
         </div>
       </div>
     </div>
