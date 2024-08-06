@@ -17,8 +17,8 @@ const projects = [
     name: "Laravel API",
     description:
       "Built an e-commerce API following REST architectural standards using the Laravel Framework.",
-    technologies: "Laravel, JWT",
-    github: "https://github.com/ptduy14/laravel-api",
+    technologies: "Laravel, JWT, Swagger",
+    github: "https://github.com/ptduy14/laravel-api-v2",
   },
 
   {
