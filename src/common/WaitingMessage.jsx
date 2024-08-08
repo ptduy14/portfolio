@@ -2,7 +2,7 @@ import avata from "../assets/img/avata.jpg";
 
 export default function WaitingMessage() {
   return (
-    <div className="flex items-center gap-x-2">
+    <div className="flex items-center gap-x-2 animate-slideUpFadeIn">
       <div className="h-full w-12 rounded-full overflow-hidden">
         <img className="h-full width-full" src={avata} alt="" />
       </div>
