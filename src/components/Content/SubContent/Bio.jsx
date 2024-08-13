@@ -4,8 +4,14 @@ import Icon from "../../Icons";
 import WorkIcon from "../../Icons/WorkIcon";
 import GithubIcon from "../../Icons/GithubIcon";
 import LinkedInIcon from "../../Icons/LinkedInIcon";
+import resume from "../../../assets/resume/resume.pdf"
 
 export default function Bio() {
+
+  const onOpenResume = () => {
+    window.open(resume)
+  }
+
   return (
     <div className="h-full flex">
       <div className="w-[30%] space-y-5 hidden lg:block">
@@ -41,14 +47,14 @@ export default function Bio() {
           continually improving myself to be better than yesterday ✨.{" "}
         </p>
         <p className="text-justify hidden md:block lg:block">
-            My GitHub page contains several personal projects that I have
-            completed based on the fundamental knowledge I have self-taught
-            during my time at university. If you find them useful, you can
-            download and refer to them for free 👨🏻‍💻.{" "}
-          </p>
+          My GitHub page contains several personal projects that I have
+          completed based on the fundamental knowledge I have self-taught during
+          my time at university. If you find them useful, you can download and
+          refer to them for free 👨🏻‍💻.{" "}
+        </p>
 
-          <button className=" lg:hidden absolute bg-tertiary-color py-2 px-5 rounded-lg bottom-8 left-1/2 translate-x-[-50%]">
-          More Info
+        <button onClick={onOpenResume} className=" lg:hidden absolute bg-tertiary-color py-2 px-5 rounded-lg bottom-8 left-1/2 translate-x-[-50%]">
+          My resume
         </button>
       </div>
     </div>
