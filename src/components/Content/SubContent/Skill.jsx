@@ -42,6 +42,12 @@ export default function Skill() {
         <img alt="" src="https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white" />
         </div>
       </div>
+      <div className="">
+        <h3 className="text-lg mb-3 font-semibold">🌐 Containerization (Basic)</h3>
+        <div className="flex justify-start flex-wrap gap-1">
+        <img alt="" src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white" />
+        </div>
+      </div>
     </div>
   );
 }
