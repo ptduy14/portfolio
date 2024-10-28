@@ -7,6 +7,13 @@ const projects = [
     github: "https://github.com/ptduy14/laboratory-management-admin",
   },
   {
+    name: "MOVIEX - An Online Movie Web Streaming",
+    description:
+      "Developed a movie streaming platform based on Next.js that allows users to watch movies, chooseepisodes, and personalize their viewing experience through a secure login systemusing Firebase.",
+    technologies: "NextJS, NextJS, TailwindCSS, Redux Toolkit, Firebase",
+    github: "https://github.com/ptduy14/movie-web",
+  },
+  {
     name: "Ride-hailing service",
     description:
       "Developed a user-friendly ride-hailing website to efficiently connect drivers and passengers.",
