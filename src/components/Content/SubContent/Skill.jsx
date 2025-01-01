@@ -18,6 +18,7 @@ export default function Skill() {
         <div className="flex justify-start flex-wrap gap-1">
           <img alt="" src="https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" />
           <img alt="" src="https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white" />
+          <img alt="" src="https://img.shields.io/badge/nestjs-E0234E?style=for-the-badge&logo=nestjs&logoColor=white" />
         </div>
       </div>
       <div className="">
