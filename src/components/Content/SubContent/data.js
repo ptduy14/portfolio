@@ -1,5 +1,12 @@
 const projects = [
   {
+    name: "Student Grade Management",
+    description:
+      "Developed a web application for managing and storing student grades using blockchain technology.",
+    technologies: "NextJS, NestJS, TailwindCSS, Sodility, Geth, Etherjs",
+    github: "https://github.com/ptduy14/student-grade-management-using-blockchain",
+  },
+  {
     name: "Laboratory Management Admin",
     description:
       "Developed a software system to manage information and activities of the university laboratory.",
