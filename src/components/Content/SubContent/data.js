@@ -16,7 +16,7 @@ const projects = [
   {
     name: "MOVIEX - An Online Movie Web Streaming",
     description:
-      "Developed a movie streaming platform based on Next.js that allows users to watch movies, chooseepisodes, and personalize their viewing experience through a secure login systemusing Firebase.",
+      "Developed a movie streaming platform using Next.js, allowing users to stream movies, track progress, manage favorites, comment, and view recently watched content.",
     technologies: "NextJS, NextJS, TailwindCSS, Redux Toolkit, Firebase",
     github: "https://github.com/ptduy14/movie-web",
   },
