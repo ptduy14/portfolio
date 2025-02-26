@@ -182,8 +182,8 @@ export default function Contact() {
           <p>https://github.com/ptduy14 </p>
         </div>
         <div className="flex items-center text-lg gap-x-3">
-          <button onClick={onOpenResume} className="bg-tertiary-color px-8 py-2 rounded-md hover:bg-[#2d3f6a] hover:text-[#d6d3cd] transition-all duration-700">
-            My Resume
+          <button onClick={onOpenResume} className="mt-7 bg-tertiary-color px-8 py-2 rounded-md hover:bg-[#2d3f6a] hover:text-[#d6d3cd] transition-all duration-700">
+            Download My CV
           </button>
         </div>
       </div>
