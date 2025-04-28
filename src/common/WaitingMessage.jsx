@@ -1,4 +1,4 @@
-import avata from "../assets/img/avata.jpg";
+import avata from "../assets/img/avata.png";
 
 export default function WaitingMessage() {
   return (
