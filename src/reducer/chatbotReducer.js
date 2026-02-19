@@ -5,7 +5,6 @@ export default function chatbotReducer(state, action) {
         ...state,
         sessionId: action.sessionId,
       };
-      break;
 
     case "set_bot_message":
       return {
@@ -18,7 +17,6 @@ export default function chatbotReducer(state, action) {
           },
         ],
       };
-      break;
 
     case "set_user_message":
       return {
@@ -27,26 +25,18 @@ export default function chatbotReducer(state, action) {
           ...state.messages,
           {
             type: "user",
-            text: action.message
-          }
-        ]
-      }
-
-    case "set_buttons_input":
-      return {
-        ...state,
-        buttonsInput: action.buttonsInput,
+            text: action.message,
+          },
+        ],
       };
-      break;
 
-    case "set_chat_initialized": 
+    case "set_chat_initialized":
       return {
         ...state,
-        isChatInitialized: action.isChatInitialized
-      }
-      break;
-      
+        isChatInitialized: action.isChatInitialized,
+      };
+
     default:
-      break;
+      return state;
   }
 }

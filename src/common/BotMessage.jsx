@@ -1,5 +1,5 @@
 import avata from "../assets/img/avata.png";
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown from "react-markdown";
 
 export default function BotMessage({ message }) {
   return (
@@ -8,7 +8,7 @@ export default function BotMessage({ message }) {
         <img className="h-full w-full" src={avata} alt="" />
       </div>
       <div className="bg-tertiary-color px-2 py-2 md:px-6 md:py-3 rounded-md">
-      <ReactMarkdown>{message}</ReactMarkdown>
+        <ReactMarkdown>{message}</ReactMarkdown>
       </div>
     </div>
   );

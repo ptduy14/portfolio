@@ -19,13 +19,6 @@ const setUserMessage = (message) => {
   };
 };
 
-const setButtonsInput = (buttonsInput) => {
-  return {
-    type: "set_buttons_input",
-    buttonsInput,
-  };
-};
-
 const setChatInitialized = (isChatInitialized) => {
   return {
     type: "set_chat_initialized",
@@ -33,4 +26,4 @@ const setChatInitialized = (isChatInitialized) => {
   };
 };
 
-export { setSession, setBotMessage, setButtonsInput, setUserMessage, setChatInitialized };
+export { setSession, setBotMessage, setUserMessage, setChatInitialized };
