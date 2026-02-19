@@ -6,7 +6,7 @@ import PhoneIcon from "../../Icons/PhoneIcon";
 import GithubIcon from "../../Icons/GithubIcon";
 import emailjs from "@emailjs/browser";
 import { ToastContext } from "../../../context/ToastContext";
-import resume from "../../../assets/resume/resume.pdf"
+import resume from "../../../assets/resume/resume.pdf";
 
 export default function Contact() {
   const { handleShowingToast } = useContext(ToastContext);
@@ -77,8 +77,8 @@ export default function Contact() {
   };
 
   const onOpenResume = () => {
-    window.open(resume)
-  }
+    window.open(resume);
+  };
 
   return (
     <div className="flex">
@@ -122,11 +122,10 @@ export default function Contact() {
           </div>
           <div>
             <textarea
-              className={`w-full lg:w-auto resize-none text-sm bg-[#121622] p-2.5 outline-none ${
-                error.message || "mb-2"
-              }`}
+              className={`w-full lg:w-3/4 resize-none text-sm bg-[#121622] p-2.5 outline-none border-solid border-transparent border-2 ${
+                error.message ? "border-[#9d0808] border-[0.0625rem]" : ""
+              } ${error.message || "mb-2"}`}
               name="message"
-              cols="49"
               rows="4"
               placeholder="Your message"
               value={input.message}
@@ -134,7 +133,8 @@ export default function Contact() {
                 handleOnchange(e.target.value.trim(), e.target.name)
               }
             ></textarea>
-            <span className="text-text-color-error text-sm inline-block h-3.5">
+            <br />
+            <span className="text-text-color-error text-sm inline-block h-3.5 break-words">
               {error.message && "This feild cannot empty"}
             </span>
           </div>
@@ -182,7 +182,10 @@ export default function Contact() {
           <p>https://github.com/ptduy14 </p>
         </div>
         <div className="flex items-center text-lg gap-x-3">
-          <button onClick={onOpenResume} className="mt-7 bg-tertiary-color px-8 py-2 rounded-md hover:bg-[#2d3f6a] hover:text-[#d6d3cd] transition-all duration-700">
+          <button
+            onClick={onOpenResume}
+            className="mt-7 bg-tertiary-color px-8 py-2 rounded-md hover:bg-[#2d3f6a] hover:text-[#d6d3cd] transition-all duration-700"
+          >
             Download My CV
           </button>
         </div>
