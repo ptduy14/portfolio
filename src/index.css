@@ -12,3 +12,33 @@
   --text-color: #9dc7e0;
   --text-color-error: #F64242;
 }
+
+/* Global scrollbar styles */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #121622;
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #121622;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #121622;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #121622;
+}

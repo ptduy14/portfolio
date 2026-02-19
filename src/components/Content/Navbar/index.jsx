@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { TABS } from "../../../constant/tab";
 
 export default function Navbar({ setCurrentContent }) {
   const [positionActiveLine, setPositionActiveLine] = useState({
@@ -23,19 +24,19 @@ export default function Navbar({ setCurrentContent }) {
       width: navbarItemList[obj.index].offsetWidth,
     });
 
-    setCurrentContent(obj.content);
+    setCurrentContent(obj.key);
   };
 
   return (
     <ul className="relative hidden md:flex" ref={navbarContainerRef}>
-      {["Bio", "Skill", "Project", "Chatbot", "Contact"].map((item, index) => {
+      {TABS.map((tab, index) => {
         return (
           <li
-            key={index}
-            onClick={() => handleSwitchContent({ index, content: item })}
+            key={tab.key}
+            onClick={() => handleSwitchContent({ index, key: tab.key })}
             className="py-5 px-6 bg-tertiary-color cursor-pointer hover:bg-hover-color"
           >
-            {item}
+            {tab.label}
           </li>
         );
       })}

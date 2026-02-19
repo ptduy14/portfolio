@@ -1,5 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
-import { pickAssistantContext } from "../assistantContext";
+import { pickAssistantContext } from "../utils/chatBot";
 
 export async function askAssistant(prompt) {
   const ai = new GoogleGenAI({

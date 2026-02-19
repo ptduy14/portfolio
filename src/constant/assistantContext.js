@@ -182,17 +182,3 @@ export const SKILLS_CONTEXT = `
   Skills:
   ${SKILLS.map((s) => `- ${s.category}: ${s.skills.join(", ")}`).join("\n")}
   `;
-
-/* =========================
-     INTENT → CONTEXT PICKER
-     ========================= */
-
-export function pickAssistantContext(prompt) {
-  const q = prompt.toLowerCase();
-
-  if (/project|portfolio|build|github/.test(q)) return PROJECTS_CONTEXT;
-  if (/experience|company|intern|fpt|job/.test(q)) return EXPERIENCES_CONTEXT;
-  if (/skill|tech|stack|react|frontend|backend/.test(q)) return SKILLS_CONTEXT;
-
-  return PROFILE_CONTEXT; // safe fallback
-}

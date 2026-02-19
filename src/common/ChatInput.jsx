@@ -20,6 +20,15 @@ export default function ChatInput({ handleSubmitMessage, isDisabled }) {
 
   return (
     <form onSubmit={handleSubmit} className="flex items-center gap-2 w-full">
+      <input
+        type="text"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        onKeyDown={handleKeyDown}
+        placeholder="Ask me something..."
+        disabled={isDisabled}
+        className="flex-1 bg-[#121622] text-text-color p-3 border-solid border-transparent border-2 outline-none text-sm rounded-md disabled:opacity-50 disabled:cursor-not-allowed focus:border-[#0041d6] transition-all"
+      />
       <button
         type="submit"
         disabled={isDisabled || !input.trim()}
@@ -34,15 +43,6 @@ export default function ChatInput({ handleSubmitMessage, isDisabled }) {
           <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
         </svg>
       </button>
-      <input
-        type="text"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        onKeyDown={handleKeyDown}
-        placeholder="Ask me something..."
-        disabled={isDisabled}
-        className="flex-1 bg-[#121622] text-text-color p-3 border-solid border-transparent border-2 outline-none text-sm rounded-md disabled:opacity-50 disabled:cursor-not-allowed focus:border-[#0041d6] transition-all"
-      />
     </form>
   );
 }
