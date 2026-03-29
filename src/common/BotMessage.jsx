@@ -11,6 +11,7 @@ export default function BotMessage({ message }) {
         <ReactMarkdown
           components={{
             a: ({ node, ...props }) => (
+              // eslint-disable-next-line jsx-a11y/anchor-has-content
               <a
                 {...props}
                 target="_blank"
