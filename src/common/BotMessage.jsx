@@ -7,8 +7,21 @@ export default function BotMessage({ message }) {
       <div className="hidden md:block md:h-12 md:w-12 rounded-full overflow-hidden flex-shrink-0">
         <img className="h-full w-full" src={avata} alt="" />
       </div>
-      <div className="bg-tertiary-color px-2 py-2 md:px-6 md:py-3 rounded-md">
-        <ReactMarkdown>{message}</ReactMarkdown>
+      <div className="bg-tertiary-color px-2 py-2 md:px-6 md:py-3 rounded-md prose prose-invert max-w-none">
+        <ReactMarkdown
+          components={{
+            a: ({ node, ...props }) => (
+              <a
+                {...props}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-400 underline"
+              />
+            ),
+          }}
+        >
+          {message}
+        </ReactMarkdown>
       </div>
     </div>
   );

@@ -24,9 +24,19 @@ export default function Content() {
     document.title = currentTab ? currentTab.label : "";
   }, [currentContent]);
 
-  const handleRenderCurrentContent = () => {
-    const Component = TAB_COMPONENT_MAP[currentContent] || Bio;
-    return <Component />;
+  const renderContent = () => {
+    return (
+      <div className="relative h-full">
+        <div className={currentContent === "ask-me" ? "block h-full" : "hidden"}>
+          <Chatbot />
+        </div>
+
+        {currentContent !== "ask-me" && (() => {
+          const Component = TAB_COMPONENT_MAP[currentContent] || Bio;
+          return <Component />;
+        })()}
+      </div>
+    );
   };
 
   return (
@@ -38,7 +48,7 @@ export default function Content() {
       />
 
       <div className="p-5 h-[22.563rem] bg-secondary-color">
-        {handleRenderCurrentContent()}
+        {renderContent()}
       </div>
     </div>
   );
