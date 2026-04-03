@@ -17,7 +17,7 @@ export async function askAssistant(prompt) {
       }
     );
 
-    return response.data.reply; 
+    return response.data; 
 
   } catch (error) {
     console.error("RAG Agent Error:", error);

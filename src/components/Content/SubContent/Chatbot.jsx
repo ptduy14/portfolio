@@ -11,6 +11,7 @@ import {
 } from "../../../reducer/actions";
 import WaitingMessage from "../../../common/WaitingMessage";
 import ChatInitializing from "../../../common/ChatInitializing";
+import resume from "../../../assets/resume/resume.pdf";
 
 export default function Chatbot() {
   const { chatbot, dispatch } = useContext(ChatbotContext);
@@ -41,6 +42,22 @@ export default function Chatbot() {
     dispatch(setChatInitialized(true));
   };
 
+  const handleBotAction = (action, data) => {
+    switch (action) {
+      case "download_cv":
+        const link = document.createElement("a");
+        link.href = resume;
+        link.setAttribute("download", "Tan_Duy_CV.pdf");
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        break;
+
+      default:
+        console.warn("Unknown action:", action);
+    }
+  };
+
   const handleSubmitMessage = async (content) => {
     if (!content.trim() || isWaitingMessage) return;
 
@@ -48,14 +65,23 @@ export default function Chatbot() {
 
     try {
       dispatch(setUserMessage(content));
+
       const response = await askAssistant(content);
-      dispatch(setBotMessage(response || "I'm not sure how to answer that."));
+
+      const { reply, action, data } = response;
+
+      const botReply = reply || "I'm not sure how to answer that.";
+      dispatch(setBotMessage(botReply));
+
+      if (action) {
+        handleBotAction(action, data);
+      }
     } catch (error) {
       console.error("Error sending message:", error);
       dispatch(
         setBotMessage(
-          "I'm sorry, I encountered an error while trying to respond. Please try again."
-        )
+          "I'm sorry, I encountered an error while trying to respond. Please try again.",
+        ),
       );
     } finally {
       setIsWaitingMessage(false);
