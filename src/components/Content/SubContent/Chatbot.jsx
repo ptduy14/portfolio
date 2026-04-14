@@ -11,7 +11,7 @@ import {
 } from "../../../reducer/actions";
 import WaitingMessage from "../../../common/WaitingMessage";
 import ChatInitializing from "../../../common/ChatInitializing";
-import resume from "../../../assets/resume/resume.pdf";
+import handleBotAction from "../../../utils/function-calling";
 
 export default function Chatbot() {
   const { chatbot, dispatch } = useContext(ChatbotContext);
@@ -40,22 +40,6 @@ export default function Chatbot() {
       "Hi! Ask me anything about my experience, skills, or projects!";
     dispatch(setBotMessage(initialMessage));
     dispatch(setChatInitialized(true));
-  };
-
-  const handleBotAction = (action, data) => {
-    switch (action) {
-      case "download_cv":
-        const link = document.createElement("a");
-        link.href = resume;
-        link.setAttribute("download", "Tan_Duy_CV.pdf");
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        break;
-
-      default:
-        console.warn("Unknown action:", action);
-    }
   };
 
   const handleSubmitMessage = async (content) => {
