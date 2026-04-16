@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Endpoint
-const HF_SPACE_URL = "http://localhost:7860/chat"; // Replace with your Hugging Face Space API endpoint
+const HF_SPACE_URL = "https://ptduy14-portfolio-rag-agent.hf.space/chat"; // Replace with your Hugging Face Space API endpoint
 
 export async function askAssistant(prompt) {
   try {
