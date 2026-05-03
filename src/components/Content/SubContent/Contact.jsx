@@ -2,7 +2,6 @@ import { useState, useRef, useContext } from "react";
 import isEmty from "../../../utils/isEmty";
 import EmailIcon from "../../Icons/EmailIcon";
 import Icon from "../../Icons";
-import PhoneIcon from "../../Icons/PhoneIcon";
 import GithubIcon from "../../Icons/GithubIcon";
 import emailjs from "@emailjs/browser";
 import { ToastContext } from "../../../context/ToastContext";
@@ -172,10 +171,6 @@ export default function Contact() {
         <div className="flex items-center text-lg gap-x-3">
           <Icon iconType={EmailIcon} roundedType="xl" />
           <p>phantanduy14@gmail.com</p>
-        </div>
-        <div className="flex items-center text-lg gap-x-3">
-          <Icon iconType={PhoneIcon} roundedType="xl" />
-          <p>0886514681</p>
         </div>
         <div className="flex items-center text-lg gap-x-3">
           <Icon iconType={GithubIcon} roundedType="xl" />

@@ -1,5 +1,4 @@
 import UserIcon from "../../Icons/UserIcon";
-import CakeIcon from "../../Icons/CakeIcon";
 import Icon from "../../Icons";
 import WorkIcon from "../../Icons/WorkIcon";
 import GithubIcon from "../../Icons/GithubIcon";
@@ -17,10 +16,6 @@ export default function Bio() {
         <div className="flex items-center space-x-2">
           <Icon iconType={UserIcon} />
           <p className="">Phan Tan Duy</p>
-        </div>
-        <div className="flex items-center space-x-2">
-          <Icon iconType={CakeIcon} />
-          <p className="">14/03/2002</p>
         </div>
         <div className="flex items-center space-x-2">
           <Icon iconType={WorkIcon} />

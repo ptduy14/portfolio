@@ -1,4 +1,4 @@
-import avata from "../../assets/img/avata.png"
+import avata from "../../assets/img/avata.jpg"
 
 export default function Avata() {
   return (
