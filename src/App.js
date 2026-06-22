@@ -1,22 +1,24 @@
-import "./App.css";
-import Header from "./components/Header/index";
-import Content from "./components/Content";
-import Toast from "./common/Toast"
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ToastContext } from "./context/ToastContext";
-import Footer from "./components/Footer";
+import Toast from "./common/Toast";
+import ThemeProvider from "./context/ThemeContext";
+import { DesktopProvider } from "./desktop/DesktopProvider";
+import Desktop from "./desktop/Desktop";
+import BootScreen from "./desktop/BootScreen";
 
 function App() {
-  const {isShowing} = useContext(ToastContext)
+  const { isShowing } = useContext(ToastContext);
+  const [booted, setBooted] = useState(false);
 
-  return <div className="bg-primary-color flex justify-center text-text-color min-h-screen">
-    {isShowing && <Toast />}
-    <div className="container w-[90%] lg:w-[70%] mx-auto my-14">
-      <Header />
-      <Content />
-      <Footer />
-    </div>
-  </div>;
+  return (
+    <ThemeProvider>
+      <DesktopProvider>
+        {isShowing && <Toast />}
+        {!booted && <BootScreen onDone={() => setBooted(true)} />}
+        <Desktop />
+      </DesktopProvider>
+    </ThemeProvider>
+  );
 }
 
 export default App;
