@@ -1,16 +1,23 @@
-import { APPS } from "../apps/registry";
+import { APPS, APP_MAP } from "../apps/registry";
 import { Icon } from "./icons";
 import { useDesktop } from "../DesktopProvider";
 
 export default function Dock() {
   const { openApp, openIds } = useDesktop();
 
+  // Show pinned apps always, plus any unpinned app that is currently running (e.g. Settings).
+  const pinned = APPS.filter((a) => a.pinned !== false);
+  const runningUnpinned = openIds
+    .map((id) => APP_MAP[id])
+    .filter((a) => a && a.pinned === false);
+  const dockApps = [...pinned, ...runningUnpinned];
+
   return (
     <nav
       aria-label="Dock"
       className="absolute left-2.5 top-1/2 z-[140] flex -translate-y-1/2 flex-col gap-2 rounded-[18px] border bg-dock p-2"
     >
-      {APPS.map((app) => {
+      {dockApps.map((app) => {
         const running = openIds.includes(app.id);
         return (
           <button

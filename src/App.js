@@ -1,22 +1,35 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { ToastContext } from "./context/ToastContext";
 import Toast from "./common/Toast";
 import ThemeProvider from "./context/ThemeContext";
+import { SystemProvider, useSystem } from "./desktop/SystemProvider";
 import { DesktopProvider } from "./desktop/DesktopProvider";
 import Desktop from "./desktop/Desktop";
 import BootScreen from "./desktop/BootScreen";
+import LockScreen from "./desktop/LockScreen";
 
-function App() {
+function Shell() {
   const { isShowing } = useContext(ToastContext);
-  const [booted, setBooted] = useState(false);
+  const { booting, finishBoot, locked, unlock } = useSystem();
 
   return (
+    <>
+      {isShowing && <Toast />}
+      <Desktop />
+      {locked && <LockScreen onUnlock={unlock} />}
+      {booting && <BootScreen onDone={finishBoot} />}
+    </>
+  );
+}
+
+function App() {
+  return (
     <ThemeProvider>
-      <DesktopProvider>
-        {isShowing && <Toast />}
-        {!booted && <BootScreen onDone={() => setBooted(true)} />}
-        <Desktop />
-      </DesktopProvider>
+      <SystemProvider>
+        <DesktopProvider>
+          <Shell />
+        </DesktopProvider>
+      </SystemProvider>
     </ThemeProvider>
   );
 }
