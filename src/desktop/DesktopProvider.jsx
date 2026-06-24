@@ -50,6 +50,12 @@ function reducer(state, action) {
           w.id === action.id ? { ...w, x: action.x, y: action.y } : w
         ),
       };
+    case "RESIZE":
+      return {
+        windows: state.windows.map((w) =>
+          w.id === action.id ? { ...w, w: action.w, h: action.h } : w
+        ),
+      };
     case "TOGGLE_MAX":
       return {
         windows: state.windows.map((w) =>
@@ -74,6 +80,7 @@ export function DesktopProvider({ children }) {
   const closeApp = useCallback((id) => dispatch({ type: "CLOSE", id }), []);
   const focusApp = useCallback((id) => dispatch({ type: "FOCUS", id }), []);
   const moveWindow = useCallback((id, x, y) => dispatch({ type: "MOVE", id, x, y }), []);
+  const resizeWindow = useCallback((id, w, h) => dispatch({ type: "RESIZE", id, w, h }), []);
   const toggleMax = useCallback((id) => dispatch({ type: "TOGGLE_MAX", id }), []);
   const minimize = useCallback((id) => dispatch({ type: "MINIMIZE", id }), []);
 
@@ -91,6 +98,7 @@ export function DesktopProvider({ children }) {
         closeApp,
         focusApp,
         moveWindow,
+        resizeWindow,
         toggleMax,
         minimize,
       }}

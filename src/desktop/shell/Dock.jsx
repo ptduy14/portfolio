@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { APPS, APP_MAP } from "../apps/registry";
 import { Icon } from "./icons";
 import { useDesktop } from "../DesktopProvider";
@@ -12,33 +13,42 @@ export default function Dock() {
     .filter((a) => a && a.pinned === false);
   const dockApps = [...pinned, ...runningUnpinned];
 
+  const [bouncing, setBouncing] = useState(null);
+
+  const launch = (id) => {
+    openApp(id);
+    setBouncing(id);
+    setTimeout(() => setBouncing((b) => (b === id ? null : b)), 600);
+  };
+
   return (
     <nav
       aria-label="Dock"
-      className="absolute left-2.5 top-1/2 z-[140] flex -translate-y-1/2 flex-col gap-2 rounded-[18px] border bg-dock p-2"
+      className="mat-popover absolute left-2.5 top-1/2 z-[140] flex -translate-y-1/2 flex-col gap-2 rounded-[18px] border p-2 shadow-float"
     >
       {dockApps.map((app) => {
         const running = openIds.includes(app.id);
         return (
-          <button
-            key={app.id}
-            onClick={() => openApp(app.id)}
-            title={app.title}
-            aria-label={app.title}
-            className={`group relative flex h-12 w-12 items-center justify-center rounded-icon border bg-surface transition-transform hover:scale-110 ${
-              running ? "text-text" : "text-text-dim hover:text-text"
-            }`}
-          >
-            <span
-              className={`absolute -left-1 top-1/2 w-1 -translate-y-1/2 rounded-full bg-accent transition-all ${
-                running ? "h-4" : "h-0"
+          <div key={app.id} className={bouncing === app.id ? "animate-dockBounce" : ""}>
+            <button
+              onClick={() => launch(app.id)}
+              title={app.title}
+              aria-label={app.title}
+              className={`group relative flex h-12 w-12 items-center justify-center rounded-icon border bg-surface transition-transform hover:scale-105 ${
+                running ? "text-text" : "text-text-dim hover:text-text"
               }`}
-            />
-            <Icon name={app.icon} size={22} />
-            <span className="pointer-events-none absolute left-[60px] top-1/2 -translate-y-1/2 whitespace-nowrap rounded-control border bg-panel px-2.5 py-1 text-xs font-semibold text-text opacity-0 transition-opacity group-hover:opacity-100">
-              {app.title}
-            </span>
-          </button>
+            >
+              <span
+                className={`absolute -left-1 top-1/2 w-1 -translate-y-1/2 rounded-full bg-accent transition-all ${
+                  running ? "h-4" : "h-0"
+                }`}
+              />
+              <Icon name={app.icon} size={22} />
+              <span className="pointer-events-none absolute left-[60px] top-1/2 -translate-y-1/2 whitespace-nowrap rounded-control border bg-panel px-2.5 py-1 text-xs font-semibold text-text opacity-0 transition-opacity group-hover:opacity-100">
+                {app.title}
+              </span>
+            </button>
+          </div>
         );
       })}
     </nav>

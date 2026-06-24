@@ -4,34 +4,60 @@ import { useSystem } from "../SystemProvider";
 import { useTheme } from "../../context/ThemeContext";
 import { useDesktop } from "../DesktopProvider";
 
-function Slider({ icon, value, min, max, onChange }) {
+// macOS Control Center–style toggle tile
+function Tile({ icon, label, sub, active, onClick }) {
   return (
-    <div className="flex items-center gap-3 px-1 py-1.5">
-      <Icon name={icon} size={18} className="flex-none text-text-dim" />
+    <button
+      onClick={onClick}
+      className={`flex items-center gap-2.5 rounded-xl border p-2.5 text-left transition-colors ${
+        active
+          ? "border-transparent bg-accent text-text-on-accent"
+          : "bg-white/[0.06] text-text hover:bg-white/[0.12]"
+      }`}
+    >
+      <span
+        className={`flex h-8 w-8 flex-none items-center justify-center rounded-full ${
+          active ? "bg-white/25" : "bg-white/10"
+        }`}
+      >
+        <Icon name={icon} size={16} />
+      </span>
+      <div className="min-w-0">
+        <div className="truncate text-[13px] font-semibold leading-tight">{label}</div>
+        {sub && <div className="truncate text-[11px] opacity-70">{sub}</div>}
+      </div>
+    </button>
+  );
+}
+
+function SliderRow({ icon, value, min, max, onChange }) {
+  return (
+    <div className="flex items-center gap-3">
+      <Icon name={icon} size={16} className="flex-none text-text-dim" />
       <input
         type="range"
         min={min}
         max={max}
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="h-1 w-full cursor-pointer accent-accent"
+        className="h-1.5 w-full cursor-pointer rounded-full accent-accent"
       />
     </div>
   );
 }
 
-function Row({ icon, label, value, onClick, danger }) {
+function ActionRow({ icon, label, value, onClick, danger }) {
   return (
     <button
       onClick={onClick}
-      className={`flex w-full items-center gap-3 rounded-control px-2.5 py-2 text-left text-sm transition-colors hover:bg-surface-hover ${
+      className={`flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-left text-sm transition-colors hover:bg-white/[0.08] ${
         danger ? "text-destructive" : "text-text"
       }`}
     >
-      <Icon name={icon} size={18} className="flex-none" />
+      <Icon name={icon} size={17} className="flex-none" />
       <span className="flex-1 font-medium">{label}</span>
       {value && <span className="text-xs text-text-dim">{value}</span>}
-      <Icon name="chevronRight" size={15} className="text-text-dim" />
+      <Icon name="chevronRight" size={14} className="text-text-dim" />
     </button>
   );
 }
@@ -55,52 +81,43 @@ export default function QuickSettings({ onClose }) {
 
   return (
     <>
-      {/* click-outside catcher */}
       <div className="fixed inset-0 z-[158]" onClick={onClose} />
 
       <div
         role="menu"
-        className="absolute right-2 top-[38px] z-[160] w-[330px] rounded-window border-strong border bg-window p-2.5 shadow-window-focus"
+        className="mat-popover absolute right-2 top-[38px] z-[160] w-[330px] space-y-2.5 rounded-2xl border p-3 shadow-float"
+        style={{ borderColor: "var(--mat-border)" }}
       >
-        {/* pointer triangle */}
-        <div className="absolute -top-1.5 right-5 h-3 w-3 rotate-45 border-l border-t border-[color:var(--border-strong)] bg-window" />
-
-        {/* sliders */}
-        <Slider icon="volume" value={volume} min={0} max={100} onChange={setVolume} />
-        <Slider
-          icon="sun"
-          value={Math.round(brightness * 100)}
-          min={40}
-          max={100}
-          onChange={(v) => setBrightness(v / 100)}
+        <div
+          className="mat-popover absolute -top-1.5 right-5 h-3 w-3 rotate-45 border-l border-t"
+          style={{ borderColor: "var(--mat-border)" }}
         />
 
-        <div className="my-2 border-t" />
+        {/* toggle tiles */}
+        <div className="grid grid-cols-2 gap-2.5">
+          <Tile icon="wifi" label="Wi-Fi" sub={network.name} active />
+          <Tile
+            icon={isDark ? "moon" : "sun"}
+            label={isDark ? "Dark" : "Light"}
+            sub="Appearance"
+            active={isDark}
+            onClick={toggleTheme}
+          />
+        </div>
 
-        {/* network + battery (decorative) */}
-        <Row icon="wifi" label={network.name} />
-        <Row icon="battery" label={`${battery.untilFull} Until Full (${battery.percent}%)`} />
+        {/* sliders module */}
+        <div className="space-y-3 rounded-xl border bg-white/[0.05] p-3">
+          <SliderRow icon="sun" value={Math.round(brightness * 100)} min={40} max={100} onChange={(v) => setBrightness(v / 100)} />
+          <SliderRow icon="volume" value={volume} min={0} max={100} onChange={setVolume} />
+        </div>
 
-        <div className="my-2 border-t" />
-
-        {/* dark/light quick toggle */}
-        <button
-          onClick={toggleTheme}
-          className="flex w-full items-center gap-3 rounded-control px-2.5 py-2 text-left text-sm text-text transition-colors hover:bg-surface-hover"
-        >
-          <Icon name={isDark ? "moon" : "sun"} size={18} className="flex-none" />
-          <span className="flex-1 font-medium">{isDark ? "Dark Style" : "Light Style"}</span>
-          <span className="rounded-full bg-accent px-2 py-0.5 text-xs font-semibold text-text-on-accent">
-            {isDark ? "ON" : "OFF"}
-          </span>
-        </button>
-
-        <div className="my-2 border-t" />
-
-        {/* actions */}
-        <Row icon="gear" label="Settings" onClick={go(() => openApp("settings"))} />
-        <Row icon="lock" label="Lock" onClick={go(lock)} />
-        <Row icon="power" label="Power Off / Log Out" danger onClick={go(reboot)} />
+        {/* actions module */}
+        <div className="rounded-xl border bg-white/[0.05] p-1">
+          <ActionRow icon="battery" label="Battery" value={`${battery.percent}%`} onClick={() => {}} />
+          <ActionRow icon="gear" label="Settings" onClick={go(() => openApp("settings"))} />
+          <ActionRow icon="lock" label="Lock" onClick={go(lock)} />
+          <ActionRow icon="power" label="Power Off / Log Out" danger onClick={go(reboot)} />
+        </div>
       </div>
     </>
   );

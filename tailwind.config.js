@@ -66,17 +66,29 @@ module.exports = {
           '100%': { transform: 'translateY(0)', opacity: '1' },
         },
         windowIn: {
-          '0%': { transform: 'scale(.98)', opacity: '0' },
+          '0%': { transform: 'scale(.92)', opacity: '0' },
           '100%': { transform: 'scale(1)', opacity: '1' },
+        },
+        dockBounce: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '30%': { transform: 'translateY(-12px)' },
+          '60%': { transform: 'translateY(-5px)' },
         },
         blink: {
           '50%': { opacity: '0' },
         },
+        toastIn: {
+          '0%': { opacity: '0', transform: 'translateX(20px)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
       },
       animation: {
         slideUpFadeIn: 'slideUpFadeIn 0.4s ease forwards',
-        windowIn: 'windowIn var(--dur-base) var(--ease) forwards',
+        // spring easing (macOS-like overshoot)
+        windowIn: 'windowIn var(--dur-base) cubic-bezier(.34,1.56,.64,1) forwards',
+        dockBounce: 'dockBounce 0.6s ease',
         blink: 'blink 1s steps(1) infinite',
+        toastIn: 'toastIn .28s cubic-bezier(.2,0,.2,1) forwards',
       },
     },
   },

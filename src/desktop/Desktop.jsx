@@ -5,6 +5,7 @@ import Window from "./shell/Window";
 import { useDesktop } from "./DesktopProvider";
 import { useSystem } from "./SystemProvider";
 import { APP_MAP } from "./apps/registry";
+import { installCursors } from "./cursors";
 
 export default function Desktop() {
   const { windows, openApp } = useDesktop();
@@ -12,12 +13,13 @@ export default function Desktop() {
 
   // Open Bio by default once the desktop mounts (behind the boot screen).
   useEffect(() => {
+    installCursors();
     openApp("bio");
   }, [openApp]);
 
   return (
     <div
-      className="relative h-screen w-screen overflow-hidden text-text-body"
+      className="desktop-root relative h-screen w-screen overflow-hidden text-text-body"
       style={{ background: wallpaper.css }}
     >
       <TopPanel />
