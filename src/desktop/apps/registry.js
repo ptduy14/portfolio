@@ -10,7 +10,7 @@ import SettingsApp from "./SettingsApp";
 // size = fraction of the viewport (computed to px on open in DesktopProvider, clamped + centered).
 export const APPS = [
   { id: "bio", title: "Bio", icon: "bio", Component: BioApp, size: { w: 0.6, h: 0.76 } },
-  { id: "skills", title: "Skills", icon: "skills", Component: SkillsApp, size: { w: 0.52, h: 0.72 } },
+  { id: "skills", title: "Skills", icon: "skills", Component: SkillsApp, size: { w: 0.56, h: 0.74 }, bare: true },
   { id: "projects", title: "Projects", icon: "projects", Component: ProjectsApp, size: { w: 0.64, h: 0.78 } },
   { id: "askme", title: "Ask Me — Terminal", icon: "terminal", Component: TerminalApp, size: { w: 0.56, h: 0.72 }, bare: true },
   { id: "contact", title: "Contact", icon: "contact", Component: ContactApp, size: { w: 0.52, h: 0.72 } },
