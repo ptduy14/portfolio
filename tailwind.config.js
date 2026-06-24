@@ -81,6 +81,10 @@ module.exports = {
           '0%': { opacity: '0', transform: 'translateX(20px)' },
           '100%': { opacity: '1', transform: 'translateX(0)' },
         },
+        drawerIn: {
+          '0%': { transform: 'translateX(100%)' },
+          '100%': { transform: 'translateX(0)' },
+        },
       },
       animation: {
         slideUpFadeIn: 'slideUpFadeIn 0.4s ease forwards',
@@ -89,6 +93,7 @@ module.exports = {
         dockBounce: 'dockBounce 0.6s ease',
         blink: 'blink 1s steps(1) infinite',
         toastIn: 'toastIn .28s cubic-bezier(.2,0,.2,1) forwards',
+        drawerIn: 'drawerIn .25s cubic-bezier(.2,0,.2,1) forwards',
       },
     },
   },

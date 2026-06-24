@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { ACCENTS, COLORS } from "./presets";
 import { WALLPAPERS } from "./wallpaperArt";
+import { fetchGithubStats } from "./github";
 
 const PRESET_BACKGROUNDS = [...WALLPAPERS, ...COLORS];
 
@@ -35,6 +36,24 @@ export function SystemProvider({ children }) {
   // ephemeral session state (not persisted)
   const [booting, setBooting] = useState(true);
   const [locked, setLocked] = useState(false);
+  const [github, setGithub] = useState({
+    status: "loading",
+    byName: {},
+    totalStars: 0,
+    repoCount: 0,
+  });
+
+  // Fetch live GitHub stats once on mount (shown in boot log + Projects app).
+  useEffect(() => {
+    let alive = true;
+    fetchGithubStats().then(
+      (data) => alive && setGithub({ status: "ok", ...data }),
+      () => alive && setGithub((g) => ({ ...g, status: "error" }))
+    );
+    return () => {
+      alive = false;
+    };
+  }, []);
 
   // persist settings
   useEffect(() => {
@@ -86,6 +105,7 @@ export function SystemProvider({ children }) {
     locked,
     lock: () => setLocked(true),
     unlock: () => setLocked(false),
+    github,
     // decorative system info
     network: { name: "Blade", connected: true },
     battery: { percent: 98, charging: true, untilFull: "0:17" },

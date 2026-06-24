@@ -15,12 +15,21 @@ const textSvg =
   `<path d='M3 3 H9 M3 21 H9 M6 3 V21' stroke='#000' stroke-width='1.3'/>` +
   `</g></svg>`;
 
+// Pointing-hand for clickable elements (matches the arrow's black-fill / white-outline style).
+const handSvg =
+  `<svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 24 24'>` +
+  `<path d='M8 5 a1.6 1.6 0 0 1 3.2 0 v4.8 c0 .3 .2 .5 .5 .5 h3.4 a3.4 3.4 0 0 1 3.4 3.4 ` +
+  `v3.1 a4 4 0 0 1 -4 4 h-4.2 a3.8 3.8 0 0 1 -2.7 -1.13 l-3.5 -3.5 ` +
+  `a1.5 1.5 0 0 1 2.12 -2.12 l1.5 1.5 V5 z' ` +
+  `fill='#000' stroke='#fff' stroke-width='1.3' stroke-linejoin='round'/></svg>`;
+
 const uri = (svg, hx, hy) =>
   `url("data:image/svg+xml,${encodeURIComponent(svg)}") ${hx} ${hy}`;
 
-// Hotspots in rendered (scaled) pixels: arrow tip ≈ (2,2), I-beam center ≈ (5,9).
+// Hotspots in rendered (scaled) pixels: arrow tip ≈ (2,2), I-beam center ≈ (5,9), hand index-tip ≈ (7,2).
 export const CURSOR_ARROW = uri(arrowSvg, 2, 2);
 export const CURSOR_TEXT = uri(textSvg, 5, 9);
+export const CURSOR_POINTER = uri(handSvg, 7, 5);
 
 // Set CSS variables once; index.css references them (var keeps data-URIs out of CSS file).
 export function installCursors() {
@@ -28,4 +37,5 @@ export function installCursors() {
   const s = document.documentElement.style;
   s.setProperty("--cursor-arrow", CURSOR_ARROW);
   s.setProperty("--cursor-text", CURSOR_TEXT);
+  s.setProperty("--cursor-pointer", CURSOR_POINTER);
 }

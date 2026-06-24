@@ -109,7 +109,7 @@ body {
 .desktop-root a,
 .desktop-root [role="button"],
 .desktop-root .cursor-pointer {
-  cursor: var(--cursor-arrow, default), pointer;
+  cursor: var(--cursor-pointer, pointer), pointer;
 }
 .desktop-root input[type="text"],
 .desktop-root input[type="email"],

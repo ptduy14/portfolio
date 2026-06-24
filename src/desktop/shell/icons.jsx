@@ -88,6 +88,30 @@ const PATHS = {
       <path d="m21 21-4.3-4.3" />
     </>
   ),
+  star: (
+    <path
+      fill="currentColor"
+      stroke="none"
+      d="M12 2l2.9 6.2 6.8.8-5 4.6 1.3 6.7L12 17.8 5.9 20.3l1.3-6.7-5-4.6 6.8-.8z"
+    />
+  ),
+  fork: (
+    <>
+      <circle cx="6" cy="5" r="2" />
+      <circle cx="18" cy="5" r="2" />
+      <circle cx="12" cy="19" r="2" />
+      <path d="M6 7v1a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V7M12 13v4" />
+    </>
+  ),
+  external: (
+    <>
+      <path d="M15 3h6v6" />
+      <path d="M10 14 21 3" />
+      <path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" />
+    </>
+  ),
+  close: <path d="M6 6l12 12M18 6 6 18" />,
+  arrowLeft: <path d="M19 12H5M12 19l-7-7 7-7" />,
   apps: (
     <>
       <circle cx="5" cy="5" r="1.7" fill="currentColor" stroke="none" />
