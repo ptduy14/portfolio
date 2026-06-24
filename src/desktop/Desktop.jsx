@@ -32,7 +32,7 @@ export default function Desktop() {
         overviewOpen={overviewOpen}
         onToggleOverview={() => setOverviewOpen((o) => !o)}
       />
-      <Dock />
+      <Dock onShowApps={() => setOverviewOpen((o) => !o)} />
 
       {windows.map((win) =>
         win.minimized ? null : <Window key={win.id} win={win} app={APP_MAP[win.id]} />

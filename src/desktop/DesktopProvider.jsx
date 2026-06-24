@@ -5,6 +5,20 @@ const DesktopContext = createContext(null);
 
 const initialState = { windows: [] };
 
+const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+
+// Size from a fraction of the viewport (responsive across screens), centered + lightly cascaded.
+function computeGeometry(cfg, count) {
+  const vw = typeof window !== "undefined" ? window.innerWidth : 1280;
+  const vh = typeof window !== "undefined" ? window.innerHeight : 800;
+  const w = clamp(Math.round(vw * cfg.size.w), 360, vw - 110); // leave room for the dock
+  const h = clamp(Math.round(vh * cfg.size.h), 260, vh - 70); // leave room for the panel
+  const n = count % 6;
+  const x = clamp(Math.round((vw - w) / 2) + n * 26, 96, Math.max(96, vw - w - 16));
+  const y = clamp(Math.round((vh - h) / 2) + n * 26, 44, Math.max(44, vh - h - 16));
+  return { x, y, w, h };
+}
+
 // windows[] is ordered by stacking: last item = top-most (focused).
 function reducer(state, action) {
   switch (action.type) {
@@ -21,19 +35,11 @@ function reducer(state, action) {
       }
       const cfg = APP_MAP[action.id];
       if (!cfg) return state;
-      const n = state.windows.length % 6;
+      const geo = computeGeometry(cfg, state.windows.length);
       return {
         windows: [
           ...state.windows,
-          {
-            id: action.id,
-            x: 120 + n * 30,
-            y: 60 + n * 30,
-            w: cfg.defaultSize.w,
-            h: cfg.defaultSize.h,
-            maximized: false,
-            minimized: false,
-          },
+          { id: action.id, ...geo, maximized: false, minimized: false },
         ],
       };
     }

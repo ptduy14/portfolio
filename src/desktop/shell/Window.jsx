@@ -48,8 +48,11 @@ export default function Window({ win, app }) {
     [win.id, win.maximized, resizeWindow]
   );
 
+  // Explicit px for both states so width/height/left/top can transition smoothly.
+  const vw = typeof window !== "undefined" ? window.innerWidth : 1280;
+  const vh = typeof window !== "undefined" ? window.innerHeight : 800;
   const style = win.maximized
-    ? { left: 92, top: 40, right: 14, bottom: 14, width: "auto", height: "auto" }
+    ? { left: 92, top: 40, width: vw - 92 - 14, height: vh - 40 - 14 }
     : { left: win.x, top: win.y, width: win.w, height: win.h };
 
   return (
@@ -59,7 +62,7 @@ export default function Window({ win, app }) {
       aria-label={app.title}
       onMouseDown={() => focusApp(win.id)}
       style={style}
-      className={`absolute flex animate-windowIn flex-col overflow-hidden rounded-window border bg-window transition-opacity ${
+      className={`absolute flex animate-windowIn flex-col overflow-hidden rounded-window border bg-window transition-[left,top,width,height,opacity] duration-200 ease-out ${
         focused ? "border-strong shadow-window-focus" : "opacity-90 shadow-window"
       }`}
     >

@@ -3,17 +3,16 @@ import { APPS, APP_MAP } from "../apps/registry";
 import { Icon } from "./icons";
 import { useDesktop } from "../DesktopProvider";
 
-export default function Dock() {
+export default function Dock({ onShowApps }) {
   const { openApp, openIds } = useDesktop();
+  const [bouncing, setBouncing] = useState(null);
 
-  // Show pinned apps always, plus any unpinned app that is currently running (e.g. Settings).
+  // Pinned apps always; plus any unpinned app that is currently running.
   const pinned = APPS.filter((a) => a.pinned !== false);
   const runningUnpinned = openIds
     .map((id) => APP_MAP[id])
     .filter((a) => a && a.pinned === false);
   const dockApps = [...pinned, ...runningUnpinned];
-
-  const [bouncing, setBouncing] = useState(null);
 
   const launch = (id) => {
     openApp(id);
@@ -51,6 +50,20 @@ export default function Dock() {
           </div>
         );
       })}
+
+      {/* separator + show-apps (Activities Overview / Launchpad) */}
+      <div className="mx-auto my-1 h-px w-7 bg-white/15" />
+      <button
+        onClick={onShowApps}
+        title="Show Applications"
+        aria-label="Show Applications"
+        className="group relative flex h-12 w-12 items-center justify-center rounded-icon border bg-surface text-text-dim transition-transform hover:scale-105 hover:text-text"
+      >
+        <Icon name="apps" size={22} />
+        <span className="pointer-events-none absolute left-[60px] top-1/2 -translate-y-1/2 whitespace-nowrap rounded-control border bg-panel px-2.5 py-1 text-xs font-semibold text-text opacity-0 transition-opacity group-hover:opacity-100">
+          Show Applications
+        </span>
+      </button>
     </nav>
   );
 }
