@@ -2,15 +2,141 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-.root,
-#root,
-#docs-root {
-  --primary-color: #191E2A;
-  --secondary-color: #222A38;
-  --tertiary-color: #121622;
-  --hover-color: #0A1222;
-  --text-color: #9dc7e0;
-  --text-color-error: #F64242;
+:root {
+  /* ===== Desktop design tokens (see design-system.md) — DARK default ===== */
+  /* surfaces */
+  --bg-wall: #121622;
+  --bg-panel: #10141f;
+  --bg-dock: #191E2A;
+  --bg-window: #191E2A;
+  --bg-headerbar: #222A38;
+  --bg-surface: #222A38;
+  --bg-surface-hover: #2A3344;
+  --border: rgba(157, 199, 224, 0.10);
+  --border-strong: rgba(157, 199, 224, 0.18);
+  /* text */
+  --text: #E6ECF3;
+  --text-body: #9dc7e0;
+  --text-dim: #6F7C8C;
+  --text-on-accent: #ffffff;
+  /* semantic / accent (Adwaita) */
+  --accent: #3584e4;
+  --accent-hover: #4a93e8;
+  --success: #26a269;
+  --warning: #e5a50a;
+  --destructive: #e25563;
+  --purple: #9141ac;
+  /* terminal sub-palette */
+  --term-bg: #12151c;
+  --term-fg: #d6e2f0;
+  --term-green: #8ff0a4;
+  --term-blue: #62a0ea;
+  --term-yellow: #f9f06b;
+  --term-purple: #dc8add;
+  --term-red: #f66151;
+  /* radius (D11 — GNOME-ish soft) */
+  --r-window: 14px;
+  --r-card: 12px;
+  --r-icon: 13px;
+  --r-control: 8px;
+  --r-pill: 999px;
+  /* motion */
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 400ms;
+  --ease: cubic-bezier(.2, 0, .2, 1);
+  /* material / vibrancy (D15 — macOS) */
+  --mat-panel: rgba(16, 20, 31, 0.72);
+  --mat-popover: rgba(25, 30, 42, 0.8);
+  --mat-border: rgba(255, 255, 255, 0.12);
+  --shadow-float: 0 12px 40px rgba(0, 0, 0, 0.45);
+
+  /* ===== Legacy aliases (migrate-only, remove in Stage F) ===== */
+  --primary-color: var(--bg-window);
+  --secondary-color: var(--bg-surface);
+  --tertiary-color: var(--bg-wall);
+  --hover-color: var(--bg-surface-hover);
+  --text-color: var(--text-body);
+  --text-color-error: var(--destructive);
+}
+
+:root.light {
+  /* surfaces */
+  --bg-wall: #dfe4ee;
+  --bg-panel: #eef1f7;
+  --bg-dock: #f8f9fc;
+  --bg-window: #f8f9fc;
+  --bg-headerbar: #eef1f7;
+  --bg-surface: #eef1f7;
+  --bg-surface-hover: #e2e7f0;
+  --border: rgba(30, 58, 95, 0.12);
+  --border-strong: rgba(30, 58, 95, 0.20);
+  /* text */
+  --text: #16202e;
+  --text-body: #1e3a5f;
+  --text-dim: #5a6b7e;
+  /* terminal (light) */
+  --term-bg: #f4f6fa;
+  --term-fg: #1e3a5f;
+  /* material (light) */
+  --mat-panel: rgba(245, 247, 250, 0.72);
+  --mat-popover: rgba(255, 255, 255, 0.82);
+  --mat-border: rgba(0, 0, 0, 0.08);
+}
+
+/* Reduced motion: tắt mọi animation/transition (design-system §5) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  font-family: "Inter", "Cantarell", system-ui, sans-serif;
+}
+
+/* macOS-style cursors (vars set by desktop/cursors.js). Arrow everywhere (incl. clickable),
+   I-beam only on text fields. Native cursors kept for grab/resize. */
+.desktop-root {
+  cursor: var(--cursor-arrow, default), auto;
+}
+.desktop-root button,
+.desktop-root a,
+.desktop-root [role="button"],
+.desktop-root .cursor-pointer {
+  cursor: var(--cursor-pointer, pointer), pointer;
+}
+.desktop-root input[type="text"],
+.desktop-root input[type="email"],
+.desktop-root input[type="search"],
+.desktop-root textarea,
+.desktop-root [contenteditable="true"] {
+  cursor: var(--cursor-text, text), text;
+}
+
+/* Vibrancy materials (D15) — floating chrome only. Solid color is the fallback. */
+.mat-panel {
+  background-color: var(--bg-panel);
+  background-color: var(--mat-panel);
+}
+.mat-popover {
+  background-color: var(--bg-window);
+  background-color: var(--mat-popover);
+}
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .mat-panel {
+    -webkit-backdrop-filter: blur(18px) saturate(1.3);
+    backdrop-filter: blur(18px) saturate(1.3);
+  }
+  .mat-popover {
+    -webkit-backdrop-filter: blur(22px) saturate(1.4);
+    backdrop-filter: blur(22px) saturate(1.4);
+  }
 }
 
 /* Global scrollbar styles */

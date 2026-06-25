@@ -1,17 +1,28 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+// Self-hosted fonts (Adwaita Sans ≈ Inter, Adwaita Mono ≈ JetBrains Mono)
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/500.css";
+import "@fontsource/inter/600.css";
+import "@fontsource/inter/700.css";
+import "@fontsource/inter/800.css";
+import "@fontsource/jetbrains-mono/400.css";
+import "@fontsource/jetbrains-mono/500.css";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import ToastProvider from "./context/ToastContext";
 import ChatbotProvider from "./context/ChatbotContext";
+import { TerminalProvider } from "./desktop/TerminalProvider";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <>
     <ToastProvider>
       <ChatbotProvider>
-        <App />
+        <TerminalProvider>
+          <App />
+        </TerminalProvider>
       </ChatbotProvider>
     </ToastProvider>
   </>
