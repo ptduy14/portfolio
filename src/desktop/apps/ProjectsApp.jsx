@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Icon } from "../shell/icons";
 import { useSystem } from "../SystemProvider";
 import { PROJECTS, CATEGORIES } from "./projects-data";
@@ -36,40 +36,90 @@ function Tags({ items, max }) {
   );
 }
 
-function Banner({ category, className = "" }) {
+// 16:9 image area. Swap the inner <div> for <img className="h-full w-full object-cover"> when
+// real screenshots are available (1280×720 recommended).
+function Cover({ category, featured }) {
   return (
-    <div className={`flex items-center justify-center ${CAT_BG[category]} ${className}`}>
-      <span className="text-xs font-bold uppercase tracking-widest text-white/85">{category}</span>
+    <div className="relative aspect-[16/9] w-full overflow-hidden">
+      <div className={`flex h-full w-full items-center justify-center ${CAT_BG[category]}`}>
+        <span className="text-xs font-bold uppercase tracking-widest text-white/85">{category}</span>
+      </div>
+      {featured && (
+        <span className="absolute left-2.5 top-2.5 rounded-full bg-black/35 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur">
+          ★ Featured
+        </span>
+      )}
     </div>
   );
 }
 
-function ProjectCard({ p, s, featured, span, onOpen }) {
+function ProjectCard({ p, s, featured, onOpen }) {
   return (
     <button
       onClick={onOpen}
-      style={span}
-      className="group flex h-full flex-col overflow-hidden rounded-card border bg-surface text-left transition-colors hover:border-strong"
+      className={`group flex flex-col overflow-hidden rounded-card border bg-surface text-left transition-transform hover:-translate-y-0.5 hover:border-strong ${
+        featured ? "ring-1 ring-accent" : ""
+      }`}
     >
-      <Banner category={p.category} className={featured ? "flex-1" : "h-16 flex-none"} />
-      <div className={`flex flex-col gap-1.5 p-3.5 ${featured ? "flex-none" : "flex-1"}`}>
-        {featured && (
-          <span className="w-fit rounded-full bg-accent px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-text-on-accent">
-            ★ Featured
-          </span>
-        )}
-        <h3 className={`font-bold text-text ${featured ? "text-lg" : "text-sm"}`}>{p.title}</h3>
+      <Cover category={p.category} featured={featured} />
+      <div className="flex flex-col gap-2 p-4">
+        <h3 className="text-sm font-bold text-text">{p.title}</h3>
         <Stats s={s} />
-        <p className="line-clamp-2 text-xs text-text-dim">{p.blurb}</p>
-        <div className="mt-auto pt-1">
-          <Tags items={p.tags} max={featured ? 6 : 3} />
-        </div>
+        <p className="line-clamp-2 text-xs leading-relaxed text-text-dim">{p.blurb}</p>
+        <Tags items={p.tags} max={4} />
       </div>
     </button>
   );
 }
 
-// Full-screen detail view (replaces the list — feels like navigating inside a real app).
+// Featured project — full-width hero (image left + content right; stacks when narrow).
+function FeaturedHero({ p, s, onOpen }) {
+  return (
+    <div className="mb-4 flex flex-wrap overflow-hidden rounded-card border bg-surface">
+      <button
+        onClick={onOpen}
+        aria-label={p.title}
+        className="relative min-h-[270px] min-w-[260px] flex-1 basis-[44%]"
+      >
+        <div className={`flex h-full w-full items-center justify-center ${CAT_BG[p.category]}`}>
+          <span className="text-xs font-bold uppercase tracking-widest text-white/85">{p.category}</span>
+        </div>
+        <span className="absolute left-3 top-3 rounded-full bg-black/35 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur">
+          ★ Featured
+        </span>
+      </button>
+      <div className="flex min-w-[300px] flex-[1.3] flex-col gap-3 p-5">
+        <button onClick={onOpen} className="flex flex-col items-start gap-2.5 text-left">
+          <h2 className="text-xl font-bold text-text">{p.title}</h2>
+          <Stats s={s} />
+          <p className="text-sm leading-relaxed text-text-body">{p.blurb}</p>
+          <Tags items={p.tags} />
+        </button>
+        <div className="mt-auto flex flex-wrap gap-2 pt-1">
+          <a
+            href={p.url}
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center gap-2 rounded-control bg-accent px-4 py-2 text-sm font-semibold text-text-on-accent transition-colors hover:bg-accent-hover"
+          >
+            <Icon name="github" size={16} /> GitHub
+          </a>
+          {p.demo && (
+            <a
+              href={p.demo}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-2 rounded-control border bg-surface px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-hover"
+            >
+              <Icon name="external" size={16} /> Live demo
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function DetailView({ project, s, onBack }) {
   return (
     <>
@@ -85,7 +135,9 @@ function DetailView({ project, s, onBack }) {
       </div>
 
       <div className="flex-1 overflow-auto">
-        <Banner category={project.category} className="h-44" />
+        <div className={`flex aspect-[21/9] w-full items-center justify-center ${CAT_BG[project.category]}`}>
+          <span className="text-sm font-bold uppercase tracking-widest text-white/85">{project.category}</span>
+        </div>
         <div className="mx-auto max-w-3xl space-y-5 p-6">
           <div className="flex flex-wrap items-center gap-3">
             {project.featured && (
@@ -133,45 +185,28 @@ export default function ProjectsApp() {
   const [query, setQuery] = useState("");
   const [view, setView] = useState("grid");
   const [selected, setSelected] = useState(null);
-  const [cols, setCols] = useState(3);
-  const gridRef = useRef(null);
 
   const stat = (p) => github.byName[p.repo] || { stars: p.stars, forks: p.forks };
 
-  // Esc backs out of the detail view.
   useEffect(() => {
     const onKey = (e) => e.key === "Escape" && setSelected(null);
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  // Window-responsive column count for the bento mosaic.
-  useEffect(() => {
-    const el = gridRef.current;
-    if (!el || typeof ResizeObserver === "undefined") return;
-    const ro = new ResizeObserver(([e]) => {
-      const w = e.contentRect.width;
-      setCols(w >= 760 ? 3 : w >= 520 ? 2 : 1);
-    });
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, [view, selected]);
-
-  const { items, featured } = useMemo(() => {
+  const { list, hero, gridItems } = useMemo(() => {
     const q = query.trim().toLowerCase();
-    const list = PROJECTS.filter(
+    const filtered = PROJECTS.filter(
       (p) =>
         (cat === "All" || p.category === cat) &&
         (p.title.toLowerCase().includes(q) || p.tags.join(" ").toLowerCase().includes(q))
     );
-    const feat = cat === "All" && !q ? list.find((p) => p.featured) : null;
-    return { items: feat ? [feat, ...list.filter((p) => p !== feat)] : list, featured: feat };
+    // Featured hero only in the unfiltered view.
+    const feat = cat === "All" && !q ? filtered.find((p) => p.featured) : null;
+    const grid = feat ? filtered.filter((p) => p !== feat) : filtered;
+    return { list: feat ? [feat, ...grid] : filtered, hero: feat, gridItems: grid };
   }, [cat, query]);
 
-  const featSpan =
-    cols >= 3 ? { gridColumn: "span 2", gridRow: "span 2" } : cols === 2 ? { gridColumn: "span 2" } : undefined;
-
-  // Detail screen takes over the whole app.
   if (selected) {
     return (
       <div className="flex h-full flex-col overflow-hidden bg-window">
@@ -224,29 +259,20 @@ export default function ProjectsApp() {
       {/* body */}
       <div className="flex-1 overflow-auto p-4">
         {view === "grid" ? (
-          <div
-            ref={gridRef}
-            className="grid gap-3"
-            style={{
-              gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
-              gridAutoRows: "172px",
-              gridAutoFlow: "dense",
-            }}
-          >
-            {items.map((p) => (
-              <ProjectCard
-                key={p.repo}
-                p={p}
-                s={stat(p)}
-                featured={featured && p === featured}
-                span={featured && p === featured ? featSpan : undefined}
-                onOpen={() => setSelected(p)}
-              />
-            ))}
-          </div>
+          <>
+            {hero && <FeaturedHero p={hero} s={stat(hero)} onOpen={() => setSelected(hero)} />}
+            {hero && (
+              <div className="mb-3 text-[11px] font-bold uppercase tracking-wider text-text-dim">More projects</div>
+            )}
+            <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-4">
+              {gridItems.map((p) => (
+                <ProjectCard key={p.repo} p={p} s={stat(p)} featured={false} onOpen={() => setSelected(p)} />
+              ))}
+            </div>
+          </>
         ) : (
           <div className="overflow-hidden rounded-card border">
-            {items.map((p) => (
+            {list.map((p) => (
               <button
                 key={p.repo}
                 onClick={() => setSelected(p)}
@@ -263,7 +289,7 @@ export default function ProjectsApp() {
           </div>
         )}
 
-        {items.length === 0 && (
+        {list.length === 0 && (
           <div className="py-10 text-center text-sm text-text-dim">No projects match “{query}”.</div>
         )}
       </div>

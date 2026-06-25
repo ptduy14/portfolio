@@ -14,7 +14,8 @@ function computeGeometry(cfg, count) {
   const w = clamp(Math.round(vw * cfg.size.w), 360, vw - 110); // leave room for the dock
   const h = clamp(Math.round(vh * cfg.size.h), 260, vh - 70); // leave room for the panel
   const n = count % 6;
-  const x = clamp(Math.round((vw - w) / 2) + n * 26, 96, Math.max(96, vw - w - 16));
+  // Bias slightly left of center so opened windows don't collide with the top-right notification.
+  const x = clamp(Math.round((vw - w) / 2 - vw * 0.08) + n * 26, 96, Math.max(96, vw - w - 16));
   const y = clamp(Math.round((vh - h) / 2) + n * 26, 44, Math.max(44, vh - h - 16));
   return { x, y, w, h };
 }
