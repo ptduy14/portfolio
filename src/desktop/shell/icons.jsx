@@ -112,6 +112,31 @@ const PATHS = {
   ),
   close: <path d="M6 6l12 12M18 6 6 18" />,
   arrowLeft: <path d="M19 12H5M12 19l-7-7 7-7" />,
+  pin: (
+    <>
+      <path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z" />
+      <circle cx="12" cy="10" r="2.5" />
+    </>
+  ),
+  copy: (
+    <>
+      <rect x="9" y="9" width="11" height="11" rx="2" />
+      <path d="M5 15V5a2 2 0 0 1 2-2h10" />
+    </>
+  ),
+  clock: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7v5l3 2" />
+    </>
+  ),
+  send: (
+    <>
+      <path d="M22 2 11 13" />
+      <path d="M22 2 15 22l-4-9-9-4z" />
+    </>
+  ),
+  download: <path d="M12 3v12M7 10l5 5 5-5M5 21h14" />,
   apps: (
     <>
       <circle cx="5" cy="5" r="1.7" fill="currentColor" stroke="none" />
