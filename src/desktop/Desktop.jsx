@@ -15,10 +15,10 @@ export default function Desktop() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [overviewOpen, setOverviewOpen] = useState(false);
 
-  // Open Bio by default once the desktop mounts (behind the boot screen).
+  // Open the Ask Me terminal by default once the desktop mounts (behind the boot screen).
   useEffect(() => {
     installCursors();
-    openApp("bio");
+    openApp("askme");
   }, [openApp]);
 
   return (

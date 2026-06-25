@@ -13,13 +13,16 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import ToastProvider from "./context/ToastContext";
 import ChatbotProvider from "./context/ChatbotContext";
+import { TerminalProvider } from "./desktop/TerminalProvider";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <>
     <ToastProvider>
       <ChatbotProvider>
-        <App />
+        <TerminalProvider>
+          <App />
+        </TerminalProvider>
       </ChatbotProvider>
     </ToastProvider>
   </>
