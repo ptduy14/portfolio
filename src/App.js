@@ -5,12 +5,15 @@ import ThemeProvider from "./context/ThemeContext";
 import { SystemProvider, useSystem } from "./desktop/SystemProvider";
 import { DesktopProvider } from "./desktop/DesktopProvider";
 import Desktop from "./desktop/Desktop";
+import MobileShell from "./desktop/mobile/MobileShell";
 import BootScreen from "./desktop/BootScreen";
 import LockScreen from "./desktop/LockScreen";
+import { useIsMobile } from "./desktop/useIsMobile";
 
 function Shell() {
   const { isShowing, handleShowingToast } = useContext(ToastContext);
   const { booting, finishBoot, locked, unlock } = useSystem();
+  const isMobile = useIsMobile();
   const welcomed = useRef(false);
 
   // Welcome notification once the desktop is revealed after boot.
@@ -28,7 +31,7 @@ function Shell() {
   return (
     <>
       {isShowing && <Toast />}
-      <Desktop />
+      {isMobile ? <MobileShell /> : <Desktop />}
       {locked && <LockScreen onUnlock={unlock} />}
       {booting && <BootScreen onDone={finishBoot} />}
     </>

@@ -9,7 +9,7 @@ export default function Toast() {
     <div
       onClick={handleClosingToast}
       role="status"
-      className="mat-popover animate-toastIn fixed right-4 top-11 z-[170] w-80 cursor-pointer rounded-2xl border p-3 shadow-float"
+      className="mat-popover animate-toastIn fixed right-4 top-11 z-[170] w-80 max-w-[calc(100vw-2rem)] cursor-pointer rounded-2xl border p-3 shadow-float"
       style={{ borderColor: "var(--mat-border)" }}
     >
       <div className="flex items-start gap-3">
