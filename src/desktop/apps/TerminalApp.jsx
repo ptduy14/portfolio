@@ -275,7 +275,7 @@ export default function TerminalApp() {
       onClick={() => inputRef.current?.focus()}
     >
       {/* log */}
-      <div ref={scrollRef} className="flex-1 overflow-auto px-4 py-3">
+      <div ref={scrollRef} role="log" aria-live="polite" aria-label="Terminal output" className="flex-1 overflow-auto px-4 py-3">
         {log.map(renderEntry)}
       </div>
 
