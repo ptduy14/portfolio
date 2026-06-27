@@ -50,14 +50,6 @@
   --mat-popover: rgba(25, 30, 42, 0.8);
   --mat-border: rgba(255, 255, 255, 0.12);
   --shadow-float: 0 12px 40px rgba(0, 0, 0, 0.45);
-
-  /* ===== Legacy aliases (migrate-only, remove in Stage F) ===== */
-  --primary-color: var(--bg-window);
-  --secondary-color: var(--bg-surface);
-  --tertiary-color: var(--bg-wall);
-  --hover-color: var(--bg-surface-hover);
-  --text-color: var(--text-body);
-  --text-color-error: var(--destructive);
 }
 
 :root.light {
