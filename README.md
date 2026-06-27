@@ -43,7 +43,7 @@ Built with React + Tailwind CSS. No Electron, no WebGL — pure DOM.
 
 ---
 
-## Screenshots
+<!-- ## Screenshots
 
 <table>
   <tr>
@@ -58,7 +58,7 @@ Built with React + Tailwind CSS. No Electron, no WebGL — pure DOM.
     <td align="center"><img src="./screenshots/06-terminal.png" alt="Terminal"/><br/><sub><b>Ask Me</b> — RAG agent terminal</sub></td>
     <td align="center"><img src="./screenshots/07-quick-settings.png" alt="Control Center"/><br/><sub><b>Control Center</b> — macOS-style quick settings</sub></td>
   </tr>
-</table>
+</table> -->
 
 ---
 
