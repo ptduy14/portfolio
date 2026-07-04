@@ -21,7 +21,7 @@ export function SystemProvider({ children }) {
 
   // persisted system settings — 'custom' is reset on load (object URL can't survive reload)
   const [wallpaperId, setWallpaperId] = useState(
-    saved.wallpaperId && saved.wallpaperId !== "custom" ? saved.wallpaperId : "midnight"
+    saved.wallpaperId && saved.wallpaperId !== "custom" ? saved.wallpaperId : "aurora"
   );
   // session-only custom (uploaded) wallpaper css
   const [customWallpaper, setCustomWallpaperCss] = useState(null);

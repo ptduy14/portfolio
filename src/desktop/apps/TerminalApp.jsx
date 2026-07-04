@@ -6,12 +6,12 @@ import { useDesktop } from "../DesktopProvider";
 import { PROJECTS } from "./projects-data";
 import { SKILLS, DOMAINS } from "./skills-data";
 
-const BANNER = `╭──────────────────────────────────────────╮
-│   ___  _   ___   __                        │
-│  |   \\| | | \\ \\ / /   duy@portfolio        │
-│  | |) | |_| |\\ V /    Ask-Me · RAG v1.0    │
-│  |___/ \\___/  |_|                          │
-╰──────────────────────────────────────────╯`;
+const BANNER = `+--------------------------------------------+
+|   ___  _   ___   __                        |
+|  |   \\| | | \\ \\ / /   duy@portfolio        |
+|  | |) | |_| |\\ V /    Ask-Me - RAG v1.0    |
+|  |___/ \\___/  |_|                          |
++--------------------------------------------+`;
 
 const HELP = `Available commands
   help          show this help
@@ -72,7 +72,7 @@ const COMMANDS = [
 
 const CHIPS = [
   "What's your tech stack?",
-  "Tell me about your blockchain project",
+  "Show me your projects",
   "Download your CV",
 ];
 

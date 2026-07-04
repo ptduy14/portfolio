@@ -3,7 +3,7 @@
 
 // Solid background colors (flat — default brand tone first).
 export const COLORS = [
-  { id: "midnight", name: "Midnight", css: "#121622" }, // default
+  { id: "midnight", name: "Midnight", css: "#121622" },
   { id: "graphite", name: "Graphite", css: "#16181d" },
   { id: "slate", name: "Slate", css: "#1b2330" },
   { id: "navy", name: "Navy", css: "#13243a" },
