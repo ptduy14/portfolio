@@ -1,7 +1,8 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { ACCENTS, COLORS } from "./presets";
 import { WALLPAPERS } from "./wallpaperArt";
 import { fetchGithubStats } from "./github";
+import { TOUR_VERSION } from "./tour";
 
 const PRESET_BACKGROUNDS = [...WALLPAPERS, ...COLORS];
 
@@ -33,6 +34,14 @@ export function SystemProvider({ children }) {
   );
   const [accentId, setAccentId] = useState(saved.accentId || "blue");
 
+  // guided tour: tourSeenVersion is version-keyed (re-greet on new features);
+  // tourOptOut is the "don't show again" checkbox (permanent, survives bumps).
+  const [tourSeenVersion, setTourSeenVersion] = useState(
+    typeof saved.tourSeenVersion === "number" ? saved.tourSeenVersion : 0
+  );
+  const [tourOptOut, setTourOptOut] = useState(!!saved.tourOptOut);
+  const [tourOpen, setTourOpen] = useState(false);
+
   // ephemeral session state (not persisted)
   const [booting, setBooting] = useState(true);
   const [locked, setLocked] = useState(false);
@@ -60,12 +69,12 @@ export function SystemProvider({ children }) {
     try {
       localStorage.setItem(
         STORAGE_KEY,
-        JSON.stringify({ wallpaperId, brightness, volume, accentId })
+        JSON.stringify({ wallpaperId, brightness, volume, accentId, tourSeenVersion, tourOptOut })
       );
     } catch {
       /* ignore quota / private-mode errors */
     }
-  }, [wallpaperId, brightness, volume, accentId]);
+  }, [wallpaperId, brightness, volume, accentId, tourSeenVersion, tourOptOut]);
 
   // apply accent live to CSS variables
   useEffect(() => {
@@ -84,6 +93,15 @@ export function SystemProvider({ children }) {
     setCustomWallpaperCss(css);
     setWallpaperId("custom");
   };
+
+  // Stable identities — auto-start effects depend on startTour, so it must not
+  // change every render (else the effect re-runs and clears its pending timeout).
+  const startTour = useCallback(() => setTourOpen(true), []);
+  const endTour = useCallback((optOut) => {
+    setTourOpen(false);
+    setTourSeenVersion(TOUR_VERSION);
+    if (optOut) setTourOptOut(true);
+  }, []);
 
   const value = {
     // appearance
@@ -105,6 +123,11 @@ export function SystemProvider({ children }) {
     locked,
     lock: () => setLocked(true),
     unlock: () => setLocked(false),
+    // guided tour
+    tourOpen,
+    startTour,
+    endTour,
+    shouldAutoTour: tourSeenVersion < TOUR_VERSION && !tourOptOut,
     github,
     // decorative system info
     network: { name: "Blade", connected: true },

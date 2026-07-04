@@ -12,6 +12,7 @@ export default function TopPanel({ menuOpen, onToggleMenu, overviewOpen, onToggl
       <div className="flex items-center gap-1">
         <button
           onClick={onToggleOverview}
+          data-tour="activities"
           className={`rounded-control px-2.5 py-0.5 transition-colors hover:bg-surface-hover ${
             overviewOpen ? "bg-surface-hover" : ""
           }`}

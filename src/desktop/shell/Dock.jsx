@@ -23,6 +23,7 @@ export default function Dock({ onShowApps }) {
   return (
     <nav
       aria-label="Dock"
+      data-tour="dock"
       className="mat-popover absolute left-2.5 top-1/2 z-[140] flex -translate-y-1/2 flex-col gap-2 rounded-[18px] border p-2 shadow-float"
     >
       {dockApps.map((app) => {

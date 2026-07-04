@@ -2,11 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import { APPS } from "../apps/registry";
 import { Icon } from "./icons";
 import { useDesktop } from "../DesktopProvider";
+import { useSystem } from "../SystemProvider";
 
 // GNOME Activities Overview / macOS Launchpad — app grid with search.
 // (Workspace/screen switcher intentionally omitted.)
 export default function Overview({ onClose }) {
   const { openApp } = useDesktop();
+  const { startTour } = useSystem();
   const [query, setQuery] = useState("");
   const inputRef = useRef(null);
 
@@ -68,6 +70,17 @@ export default function Overview({ onClose }) {
         ) : (
           <p className="text-sm text-white/60">No results for “{query}”.</p>
         )}
+
+        <button
+          onClick={() => {
+            startTour();
+            onClose();
+          }}
+          className="mt-10 flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm text-white/80 backdrop-blur transition-colors hover:bg-white/20"
+        >
+          <Icon name="bell" size={15} />
+          Take the guided tour
+        </button>
       </div>
     </div>
   );

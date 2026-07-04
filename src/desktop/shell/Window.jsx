@@ -60,6 +60,7 @@ export default function Window({ win, app }) {
       ref={ref}
       role="dialog"
       aria-label={app.title}
+      data-tour={win.id === "askme" ? "terminal" : undefined}
       onMouseDown={() => focusApp(win.id)}
       style={style}
       className={`absolute flex animate-windowIn flex-col overflow-hidden rounded-window border bg-window transition-[left,top,width,height,opacity] duration-200 ease-out ${
@@ -77,7 +78,7 @@ export default function Window({ win, app }) {
           <span className="text-sm font-bold">{app.title}</span>
         </div>
         {/* macOS traffic-lights: gray when inactive, reveal glyphs on hover */}
-        <div className="group/lights flex items-center gap-2" data-no-drag>
+        <div className="group/lights flex items-center gap-2" data-no-drag data-tour="window-controls">
           <button
             onClick={() => minimize(win.id)}
             title="minimize"

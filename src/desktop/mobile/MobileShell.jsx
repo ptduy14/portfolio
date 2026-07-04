@@ -1,8 +1,10 @@
+import { useEffect, useRef } from "react";
 import Clock from "../shell/Clock";
 import { Icon } from "../shell/icons";
 import { useDesktop } from "../DesktopProvider";
 import { useSystem } from "../SystemProvider";
 import { APPS, APP_MAP } from "../apps/registry";
+import GuidedTour from "../GuidedTour";
 
 function Home({ onOpen }) {
   return (
@@ -25,12 +27,22 @@ function Home({ onOpen }) {
 // openApp = push a screen, closeApp(top) = back. Only the focused app is shown, full-screen.
 export default function MobileShell() {
   const { windows, openApp, closeApp } = useDesktop();
-  const { wallpaper } = useSystem();
+  const { wallpaper, booting, locked, shouldAutoTour, startTour } = useSystem();
+  const autoStarted = useRef(false);
 
   const visible = windows.filter((w) => !w.minimized);
   const top = visible.length ? visible[visible.length - 1] : null;
   const app = top ? APP_MAP[top.id] : null;
   const Body = app?.Component;
+
+  // First-run welcome (shorter track) once the boot screen clears.
+  useEffect(() => {
+    if (!booting && !locked && shouldAutoTour && !autoStarted.current) {
+      autoStarted.current = true;
+      const t = setTimeout(startTour, 550);
+      return () => clearTimeout(t);
+    }
+  }, [booting, locked, shouldAutoTour, startTour]);
 
   return (
     <div
@@ -62,6 +74,8 @@ export default function MobileShell() {
       ) : (
         <Home onOpen={openApp} />
       )}
+
+      <GuidedTour mobile />
     </div>
   );
 }

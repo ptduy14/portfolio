@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext } from "react";
 import { ToastContext } from "./context/ToastContext";
 import Toast from "./common/Toast";
 import ThemeProvider from "./context/ThemeContext";
@@ -11,22 +11,10 @@ import LockScreen from "./desktop/LockScreen";
 import { useIsMobile } from "./desktop/useIsMobile";
 
 function Shell() {
-  const { isShowing, handleShowingToast } = useContext(ToastContext);
+  // Onboarding is handled by the first-run GuidedTour (mounted inside the shells).
+  const { isShowing } = useContext(ToastContext);
   const { booting, finishBoot, locked, unlock } = useSystem();
   const isMobile = useIsMobile();
-  const welcomed = useRef(false);
-
-  // Welcome notification once the desktop is revealed after boot.
-  useEffect(() => {
-    if (!booting && !welcomed.current) {
-      welcomed.current = true;
-      handleShowingToast(
-        "Click around — this portfolio is a real desktop. Try the dock & Settings.",
-        "Welcome to Portfolio OS"
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [booting]);
 
   return (
     <>

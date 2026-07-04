@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import TopPanel from "./shell/TopPanel";
 import Dock from "./shell/Dock";
 import Window from "./shell/Window";
 import QuickSettings from "./shell/QuickSettings";
 import Overview from "./shell/Overview";
+import GuidedTour from "./GuidedTour";
 import { useDesktop } from "./DesktopProvider";
 import { useSystem } from "./SystemProvider";
 import { APP_MAP } from "./apps/registry";
@@ -11,15 +12,25 @@ import { installCursors } from "./cursors";
 
 export default function Desktop() {
   const { windows, openApp } = useDesktop();
-  const { wallpaper, brightness } = useSystem();
+  const { wallpaper, brightness, booting, locked, shouldAutoTour, startTour } = useSystem();
   const [menuOpen, setMenuOpen] = useState(false);
   const [overviewOpen, setOverviewOpen] = useState(false);
+  const autoStarted = useRef(false);
 
   // Open the Ask Me terminal by default once the desktop mounts (behind the boot screen).
   useEffect(() => {
     installCursors();
     openApp("askme");
   }, [openApp]);
+
+  // First-run guided tour: start once the desktop is revealed after boot.
+  useEffect(() => {
+    if (!booting && !locked && shouldAutoTour && !autoStarted.current) {
+      autoStarted.current = true;
+      const t = setTimeout(startTour, 550); // let the desktop settle after boot
+      return () => clearTimeout(t);
+    }
+  }, [booting, locked, shouldAutoTour, startTour]);
 
   return (
     <div
@@ -41,6 +52,8 @@ export default function Desktop() {
       {/* overlays rendered at desktop level (NOT inside the blurred panel) so they layer correctly */}
       {overviewOpen && <Overview onClose={() => setOverviewOpen(false)} />}
       {menuOpen && <QuickSettings onClose={() => setMenuOpen(false)} />}
+
+      <GuidedTour />
 
       {/* Brightness dim overlay — dims the whole screen like a real display. */}
       <div

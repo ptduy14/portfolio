@@ -168,6 +168,7 @@ function Power() {
 }
 
 function About() {
+  const { startTour } = useSystem();
   const info = [
     ["Device name", "duy@portfolio"],
     ["OS", "Portfolio OS 1.0 (GNOME-flavored)"],
@@ -196,6 +197,14 @@ function About() {
           </div>
         ))}
       </dl>
+
+      <button
+        onClick={startTour}
+        className="mt-5 flex items-center gap-2 rounded-control border px-3.5 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-hover"
+      >
+        <Icon name="bell" size={16} />
+        Replay the guided tour
+      </button>
     </div>
   );
 }

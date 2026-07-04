@@ -8,6 +8,7 @@ export default function SystemTray({ open, onClick }) {
   return (
     <button
       data-no-drag
+      data-tour="tray"
       onClick={onClick}
       aria-label="System menu"
       aria-expanded={open}
