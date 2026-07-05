@@ -302,7 +302,7 @@ export default function GuidedTour({ mobile = false }) {
             You're all set
           </h2>
           <p className="mx-auto max-w-[350px] text-[15px] leading-relaxed">
-            Like what you see? Grab my CV, or drop me a message — I'm open to work.
+            Like what you see? Grab my CV, or drop me a message — always happy to connect.
           </p>
           <p className="mx-auto mt-2 max-w-[350px] text-[13px] text-text-dim">
             Replay this tour anytime from Settings → About.

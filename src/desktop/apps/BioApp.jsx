@@ -14,7 +14,7 @@ const FACTS = [
   ["Location", "HCM City, Vietnam"],
   ["Experience", "Over 1 year"],
   ["Focus", "Web · SaaS · AI"],
-  ["Available", "Open to work"],
+  ["Open to", "New connections"],
 ];
 
 const TECH = ["React.js", "Next.js", "NestJS", "Solidity", "AI / LLM"];
@@ -42,7 +42,7 @@ export default function BioApp() {
           <p className="text-sm text-text-dim">Software Engineer · Full-stack Web Developer</p>
           <span className="inline-flex w-fit items-center gap-2 rounded-full border px-3 py-1 text-xs text-text-body">
             <span className="h-2 w-2 rounded-full bg-success" />
-            Open to work
+            Open to connect
           </span>
           <div className="mt-1 flex gap-2">
             {SOCIALS.map((s) => (

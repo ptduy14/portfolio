@@ -119,7 +119,7 @@ export default function ContactApp() {
             <Icon name="pin" size={16} className="text-text-dim" /> HCM City, Vietnam
           </div>
           <span className="inline-flex w-fit items-center gap-2 rounded-full border px-3 py-1 text-xs text-text-body">
-            <span className="h-2 w-2 rounded-full bg-success" /> Open to work
+            <span className="h-2 w-2 rounded-full bg-success" /> Open to connect
           </span>
           <div className="flex items-center gap-2 px-1 text-xs text-text-dim">
             <Icon name="clock" size={14} /> Usually replies within a day

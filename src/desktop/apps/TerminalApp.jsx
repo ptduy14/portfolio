@@ -5,6 +5,7 @@ import { useTerminal } from "../TerminalProvider";
 import { useDesktop } from "../DesktopProvider";
 import { PROJECTS } from "./projects-data";
 import { SKILLS, DOMAINS } from "./skills-data";
+import { EXPERIENCE } from "./experience-data";
 
 const BANNER = `+--------------------------------------------+
 |   ___  _   ___   __                        |
@@ -19,11 +20,12 @@ const HELP = `Available commands
   about         short bio
   skills        tech stack summary
   projects      list projects (with stars)
+  experience    work history summary
   contact       contact channels
   socials       social links
   cv            download my CV
   neofetch      system info
-  open <app>    open an app (bio · skills · projects · contact · settings)
+  open <app>    open an app (bio · skills · projects · experience · contact · settings)
   clear         clear the screen
   exit          close this window
 
@@ -47,7 +49,7 @@ LinkedIn  linkedin.com/in/tan-duy-phan-6087a1311
 Email     phantanduy14@gmail.com`;
 const CONTACT = `Email     phantanduy14@gmail.com
 GitHub    github.com/ptduy14
-Location  HCM City, Vietnam  ·  Open to work`;
+Location  HCM City, Vietnam  ·  Open to connect`;
 
 const skillsSummary = () =>
   DOMAINS.map((d) => `${d}: ${SKILLS.filter((s) => s.domain === d).map((s) => s.name).join(", ")}`).join("\n");
@@ -55,10 +57,21 @@ const skillsSummary = () =>
 const projectsSummary = () =>
   PROJECTS.map((p) => `★${String(p.stars).padEnd(2)} ${p.title}`).join("\n");
 
+const fmtMonth = (v) => {
+  if (v === "present") return "present";
+  const [y, m] = v.split("-");
+  return `${["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][+m - 1]} ${y}`;
+};
+const experienceSummary = () =>
+  EXPERIENCE.map(
+    (e) => `${e.role} · ${e.company}\n  ${fmtMonth(e.start)} – ${fmtMonth(e.end)} · ${e.location}`
+  ).join("\n");
+
 const OPEN_ALIASES = {
   bio: "bio",
   skills: "skills",
   projects: "projects",
+  experience: "experience",
   contact: "contact",
   settings: "settings",
   terminal: "askme",
@@ -66,7 +79,7 @@ const OPEN_ALIASES = {
 };
 
 const COMMANDS = [
-  "help", "whoami", "about", "skills", "projects", "contact",
+  "help", "whoami", "about", "skills", "projects", "experience", "contact",
   "socials", "cv", "resume", "neofetch", "open", "clear", "exit", "sudo",
 ];
 
@@ -165,6 +178,7 @@ export default function TerminalApp() {
       case "about": return pushEntry("output", ABOUT);
       case "skills": return pushEntry("output", skillsSummary());
       case "projects": return pushEntry("output", projectsSummary());
+      case "experience": return pushEntry("output", experienceSummary());
       case "contact": return pushEntry("output", CONTACT);
       case "socials": return pushEntry("output", SOCIALS);
       case "neofetch": return pushEntry("output", NEOFETCH);
