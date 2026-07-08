@@ -1,6 +1,6 @@
 // Guided-tour config. Bump TOUR_VERSION after shipping new features to re-greet
 // returning visitors (unless they permanently opted out via the welcome checkbox).
-export const TOUR_VERSION = 1;
+export const TOUR_VERSION = 2;
 
 // Each step spotlights a REAL element resolved by selector at runtime. If an
 // element is missing (viewport, minimised), GuidedTour skips that step rather
@@ -36,5 +36,11 @@ export const TOUR_STEPS = [
     title: "Make it yours",
     body: "Open Control Center for theme, accent colour, wallpaper, and dark mode.",
     prefer: "bottom",
+  },
+  {
+    selector: '[data-tour="widget"]',
+    title: "My live GitHub activity",
+    body: "A live contribution heatmap and stats, refreshed daily. Not your thing? Turn it off in Settings → Appearance → Desktop.",
+    prefer: "left",
   },
 ];

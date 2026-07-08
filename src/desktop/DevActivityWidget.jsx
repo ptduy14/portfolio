@@ -45,6 +45,7 @@ export default function DevActivityWidget() {
       target="_blank"
       rel="noreferrer"
       aria-label="Open GitHub profile"
+      data-tour="widget"
       className="mat-popover group absolute bottom-4 right-4 hidden w-[320px] rounded-2xl border p-4 shadow-float transition-transform hover:-translate-y-0.5 md:block"
       style={{ borderColor: "var(--mat-border)" }}
     >
