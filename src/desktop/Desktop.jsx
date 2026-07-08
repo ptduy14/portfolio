@@ -5,6 +5,7 @@ import Window from "./shell/Window";
 import QuickSettings from "./shell/QuickSettings";
 import Overview from "./shell/Overview";
 import GuidedTour from "./GuidedTour";
+import DevActivityWidget from "./DevActivityWidget";
 import { useDesktop } from "./DesktopProvider";
 import { useSystem } from "./SystemProvider";
 import { APP_MAP } from "./apps/registry";
@@ -44,6 +45,9 @@ export default function Desktop() {
         onToggleOverview={() => setOverviewOpen((o) => !o)}
       />
       <Dock onShowApps={() => setOverviewOpen((o) => !o)} />
+
+      {/* desktop widget (wallpaper layer — rendered before windows so they stack above it) */}
+      <DevActivityWidget />
 
       {windows.map((win) =>
         win.minimized ? null : <Window key={win.id} win={win} app={APP_MAP[win.id]} />

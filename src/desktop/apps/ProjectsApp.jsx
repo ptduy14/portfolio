@@ -36,6 +36,38 @@ function Tags({ items, max }) {
   );
 }
 
+const fmtPct = (n, precise) => (precise ? `${n.toFixed(1)}%` : `${Math.round(n)}%`);
+
+// Live GitHub language breakdown: stacked bar + legend. Hides when there's no data;
+// shows a skeleton only while GitHub is still syncing.
+function LangBar({ langs, height = 7, legendMax = 4, precise = false }) {
+  const { github } = useSystem();
+  if (!langs || !langs.length) {
+    if (github.status === "loading") {
+      return <div className="w-full animate-pulse rounded-full bg-white/[0.06]" style={{ height }} />;
+    }
+    return null;
+  }
+  return (
+    <div>
+      <div className="flex w-full overflow-hidden rounded-full bg-white/[0.06]" style={{ height }}>
+        {langs.map((l) => (
+          <span key={l.name} style={{ width: `${l.pct}%`, background: l.color }} />
+        ))}
+      </div>
+      <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1">
+        {langs.slice(0, legendMax).map((l) => (
+          <span key={l.name} className="flex items-center gap-1.5 text-[11px] text-text-body">
+            <span className="h-2 w-2 flex-none rounded-full" style={{ background: l.color }} />
+            <span className="font-medium text-text">{l.name}</span>
+            <span className="font-mono text-[10px] text-text-dim">{fmtPct(l.pct, precise)}</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // 16:9 image area. Swap the inner <div> for <img className="h-full w-full object-cover"> when
 // real screenshots are available (1280×720 recommended).
 function Cover({ category, featured }) {
@@ -65,6 +97,7 @@ function ProjectCard({ p, s, featured, onOpen }) {
       <div className="flex flex-col gap-2 p-4">
         <h3 className="text-sm font-bold text-text">{p.title}</h3>
         <Stats s={s} />
+        <LangBar langs={s.langs} legendMax={3} />
         <p className="line-clamp-2 text-xs leading-relaxed text-text-dim">{p.blurb}</p>
         <Tags items={p.tags} max={4} />
       </div>
@@ -94,6 +127,9 @@ function FeaturedHero({ p, s, onOpen }) {
           <Stats s={s} />
           <p className="text-sm leading-relaxed text-text-body">{p.blurb}</p>
           <Tags items={p.tags} />
+          <div className="w-full">
+            <LangBar langs={s.langs} height={8} />
+          </div>
         </button>
         <div className="mt-auto flex flex-wrap gap-2 pt-1">
           <a
@@ -149,6 +185,12 @@ function DetailView({ project, s, onBack }) {
           </div>
           <Stats s={s} />
           <p className="text-sm leading-relaxed text-text-body">{project.description}</p>
+          {s.langs?.length > 0 && (
+            <div>
+              <div className="mb-2 text-[11px] font-bold uppercase tracking-wider text-text-dim">Languages</div>
+              <LangBar langs={s.langs} height={9} legendMax={6} precise />
+            </div>
+          )}
           <div>
             <div className="mb-2 text-[11px] font-bold uppercase tracking-wider text-text-dim">Tech Stack</div>
             <Tags items={project.tags} />

@@ -42,6 +42,9 @@ export function SystemProvider({ children }) {
   const [tourOptOut, setTourOptOut] = useState(!!saved.tourOptOut);
   const [tourOpen, setTourOpen] = useState(false);
 
+  // desktop widgets (Dev Activity) — on unless explicitly turned off
+  const [showWidgets, setShowWidgets] = useState(saved.showWidgets !== false);
+
   // ephemeral session state (not persisted)
   const [booting, setBooting] = useState(true);
   const [locked, setLocked] = useState(false);
@@ -69,12 +72,12 @@ export function SystemProvider({ children }) {
     try {
       localStorage.setItem(
         STORAGE_KEY,
-        JSON.stringify({ wallpaperId, brightness, volume, accentId, tourSeenVersion, tourOptOut })
+        JSON.stringify({ wallpaperId, brightness, volume, accentId, tourSeenVersion, tourOptOut, showWidgets })
       );
     } catch {
       /* ignore quota / private-mode errors */
     }
-  }, [wallpaperId, brightness, volume, accentId, tourSeenVersion, tourOptOut]);
+  }, [wallpaperId, brightness, volume, accentId, tourSeenVersion, tourOptOut, showWidgets]);
 
   // apply accent live to CSS variables
   useEffect(() => {
@@ -128,6 +131,9 @@ export function SystemProvider({ children }) {
     startTour,
     endTour,
     shouldAutoTour: tourSeenVersion < TOUR_VERSION && !tourOptOut,
+    // desktop widgets
+    showWidgets,
+    setShowWidgets,
     github,
     // decorative system info
     network: { name: "Blade", connected: true },

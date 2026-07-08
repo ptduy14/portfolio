@@ -1,0 +1,36 @@
+name: Refresh GitHub contributions
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 4 * * *" # daily ~04:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  bake:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Fetch contribution calendar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_USER: ptduy14
+        run: node scripts/fetch-contributions.mjs
+      - name: Commit if changed
+        run: |
+          if ! git diff --quiet -- src/data/contributions.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add src/data/contributions.json
+            git commit -m "chore: refresh GitHub contributions [skip ci]"
+            git push
+          else
+            echo "No change."
+          fi

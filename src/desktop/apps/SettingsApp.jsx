@@ -80,7 +80,7 @@ function Background() {
 
 function Appearance() {
   const { isDark, toggleTheme } = useTheme();
-  const { accentId, setAccentId } = useSystem();
+  const { accentId, setAccentId, showWidgets, setShowWidgets } = useSystem();
   return (
     <div>
       <SectionTitle>Appearance</SectionTitle>
@@ -105,7 +105,7 @@ function Appearance() {
         </div>
       </div>
 
-      <div>
+      <div className="mb-6">
         <div className="mb-2 text-sm font-medium text-text-body">Accent color</div>
         <div className="flex flex-wrap gap-3">
           {ACCENTS.map((a) => (
@@ -121,6 +121,24 @@ function Appearance() {
             />
           ))}
         </div>
+      </div>
+
+      <div>
+        <div className="mb-2 text-sm font-medium text-text-body">Desktop</div>
+        <button
+          onClick={() => setShowWidgets(!showWidgets)}
+          role="switch"
+          aria-checked={showWidgets}
+          className="flex w-full items-center justify-between rounded-card border bg-surface px-4 py-3 text-left transition-colors hover:bg-surface-hover"
+        >
+          <span>
+            <span className="block text-sm font-medium text-text">Dev Activity widget</span>
+            <span className="block text-xs text-text-dim">GitHub stats &amp; contribution heatmap, bottom-right</span>
+          </span>
+          <span className={`relative h-6 w-10 flex-none rounded-full transition-colors ${showWidgets ? "bg-accent" : "bg-white/15"}`}>
+            <span className={`absolute top-0.5 h-5 w-5 rounded-full bg-white transition-all ${showWidgets ? "left-[18px]" : "left-0.5"}`} />
+          </span>
+        </button>
       </div>
     </div>
   );
