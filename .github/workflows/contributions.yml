@@ -20,7 +20,7 @@ jobs:
           node-version: 20
       - name: Fetch contribution calendar
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
           GH_USER: ptduy14
         run: node scripts/fetch-contributions.mjs
       - name: Commit if changed
