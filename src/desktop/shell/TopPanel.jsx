@@ -1,9 +1,10 @@
 import Clock from "./Clock";
 import SystemTray from "./SystemTray";
+import { Icon } from "./icons";
 import { useDesktop } from "../DesktopProvider";
 import { APP_MAP } from "../apps/registry";
 
-export default function TopPanel({ menuOpen, onToggleMenu, overviewOpen, onToggleOverview }) {
+export default function TopPanel({ menuOpen, onToggleMenu, overviewOpen, onToggleOverview, onOpenPalette }) {
   const { focusedId } = useDesktop();
   const focusedApp = focusedId ? APP_MAP[focusedId] : null;
 
@@ -28,7 +29,19 @@ export default function TopPanel({ menuOpen, onToggleMenu, overviewOpen, onToggl
         <Clock />
       </div>
 
-      <SystemTray open={menuOpen} onClick={onToggleMenu} />
+      <div className="flex items-center gap-2">
+        <button
+          onClick={onOpenPalette}
+          data-tour="palette"
+          title="Search — Command palette (⌘K)"
+          aria-label="Command palette"
+          className="flex items-center justify-center rounded-control p-1 text-text-dim transition-colors hover:bg-surface-hover hover:text-text"
+        >
+          <Icon name="search" size={16} />
+        </button>
+        <span className="h-4 w-px bg-white/10" aria-hidden="true" />
+        <SystemTray open={menuOpen} onClick={onToggleMenu} />
+      </div>
     </div>
   );
 }

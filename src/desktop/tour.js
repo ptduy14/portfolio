@@ -1,6 +1,6 @@
 // Guided-tour config. Bump TOUR_VERSION after shipping new features to re-greet
 // returning visitors (unless they permanently opted out via the welcome checkbox).
-export const TOUR_VERSION = 2;
+export const TOUR_VERSION = 3;
 
 // Each step spotlights a REAL element resolved by selector at runtime. If an
 // element is missing (viewport, minimised), GuidedTour skips that step rather
@@ -23,6 +23,12 @@ export const TOUR_STEPS = [
     selector: '[data-tour="activities"]',
     title: "Activities & search",
     body: "See every open window and search everything from one place — like GNOME's overview.",
+    prefer: "bottom",
+  },
+  {
+    selector: '[data-tour="palette"]',
+    title: "Command palette",
+    body: "Press ⌘K (or Ctrl+K) — or click here — to jump to any app or run an action. Tip: press G then B/S/P/E/T/C.",
     prefer: "bottom",
   },
   {
