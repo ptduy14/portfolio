@@ -2,11 +2,13 @@ import Clock from "./Clock";
 import SystemTray from "./SystemTray";
 import { Icon } from "./icons";
 import { useDesktop } from "../DesktopProvider";
+import { useFullscreen } from "../useFullscreen";
 import { APP_MAP } from "../apps/registry";
 
 export default function TopPanel({ menuOpen, onToggleMenu, overviewOpen, onToggleOverview, onOpenPalette }) {
   const { focusedId } = useDesktop();
   const focusedApp = focusedId ? APP_MAP[focusedId] : null;
+  const [isFull, toggleFull] = useFullscreen();
 
   return (
     <div className="mat-panel absolute inset-x-0 top-0 z-[150] flex h-8 items-center justify-between border-b px-3 text-[13px] font-semibold text-text">
@@ -38,6 +40,14 @@ export default function TopPanel({ menuOpen, onToggleMenu, overviewOpen, onToggl
           className="flex items-center justify-center rounded-control p-1 text-text-dim transition-colors hover:bg-surface-hover hover:text-text"
         >
           <Icon name="search" size={16} />
+        </button>
+        <button
+          onClick={toggleFull}
+          title={isFull ? "Exit fullscreen" : "Fullscreen"}
+          aria-label={isFull ? "Exit fullscreen" : "Enter fullscreen"}
+          className="flex items-center justify-center rounded-control p-1 text-text-dim transition-colors hover:bg-surface-hover hover:text-text"
+        >
+          <Icon name={isFull ? "compress" : "expand"} size={15} />
         </button>
         <span className="h-4 w-px bg-white/10" aria-hidden="true" />
         <SystemTray open={menuOpen} onClick={onToggleMenu} />

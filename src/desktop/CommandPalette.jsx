@@ -4,6 +4,7 @@ import { Icon } from "./shell/icons";
 import { useDesktop } from "./DesktopProvider";
 import { useSystem } from "./SystemProvider";
 import { useTheme } from "../context/ThemeContext";
+import { toggleFullscreen } from "./useFullscreen";
 import handleBotAction from "../utils/function-calling";
 
 // "g"-leader shortcut per app (mirrors useGlobalShortcuts in Desktop).
@@ -57,6 +58,7 @@ export default function CommandPalette({ onClose, onOpenOverview, onOpenQuickSet
       { id: "theme", label: isDark ? "Switch to Light mode" : "Switch to Dark mode", hint: "Appearance", icon: isDark ? "sun" : "moon", keywords: "theme dark light appearance", run: run(toggleTheme) },
       { id: "overview", label: "Show all windows", hint: "Activities", icon: "apps", keywords: "activities overview search", run: run(onOpenOverview) },
       { id: "control", label: "Open Control Center", hint: "System", icon: "gear", keywords: "quick settings wifi volume brightness", run: run(onOpenQuickSettings) },
+      { id: "fullscreen", label: "Toggle fullscreen", hint: "View", icon: "expand", keywords: "fullscreen f11 maximize screen", run: run(toggleFullscreen) },
       { id: "widget", label: showWidgets ? "Hide Dev Activity widget" : "Show Dev Activity widget", hint: "Desktop", icon: "github", keywords: "github contributions widget toggle", run: run(() => setShowWidgets(!showWidgets)) },
       { id: "tour", label: "Take the guided tour", hint: "Help", icon: "bell", keywords: "onboarding tour help guide", run: run(startTour) },
       { id: "lock", label: "Lock screen", hint: "System", icon: "lock", keywords: "lock", run: run(lock) },
