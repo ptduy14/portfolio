@@ -106,6 +106,18 @@ npm start        # development — http://localhost:3000
 npm run build    # production build
 ```
 
+### 4. Deploy to Cloudflare Workers
+
+The site is deployed as a static single-page app using Cloudflare Workers Static Assets. A push to `main` runs the GitHub Actions workflow in `.github/workflows/deploy.yml`; you can also start it from the Actions tab with **Run workflow**.
+
+Before the first run:
+
+1. Create a Cloudflare API token with permission to deploy Workers and copy your Cloudflare Account ID.
+2. In the GitHub repository, open **Settings → Secrets and variables → Actions** and add `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`.
+3. To enable the contact form in production, also add `REACT_APP_EMAILJS_SERVICE_ID`, `REACT_APP_EMAILJS_TEMPLATE_ID`, and `REACT_APP_EMAILJS_PUBLIC_KEY`.
+
+The workflow installs the locked dependencies, builds the app into `build/`, then deploys that directory using `wrangler.jsonc`. Keep API tokens in GitHub Secrets, never in the repository.
+
 ---
 
 ## Project Structure
