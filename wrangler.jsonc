@@ -1,9 +1,5 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "portfolio-os-ptduy14",
-  "compatibility_date": "2026-11-28",
-  "assets": {
-    "directory": "./build",
-    "not_found_handling": "single-page-application"
-  }
+  "name": "portfolio",
+  "pages_build_output_dir": "./build"
 }

@@ -106,17 +106,20 @@ npm start        # development — http://localhost:3000
 npm run build    # production build
 ```
 
-### 4. Deploy to Cloudflare Workers
+### 4. Deploy to Cloudflare Pages
 
-The site is deployed as a static single-page app using Cloudflare Workers Static Assets. A push to `main` runs the GitHub Actions workflow in `.github/workflows/deploy.yml`; you can also start it from the Actions tab with **Run workflow**.
+The site is deployed as a static single-page app to Cloudflare Pages with GitHub Actions and Wrangler. A push to `main` runs the workflow in `.github/workflows/deploy.yml`; you can also start it from the Actions tab with **Run workflow**.
 
 Before the first run:
 
-1. Create a Cloudflare API token with permission to deploy Workers and copy your Cloudflare Account ID.
-2. In the GitHub repository, open **Settings → Secrets and variables → Actions** and add `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`.
-3. To enable the contact form in production, also add `REACT_APP_EMAILJS_SERVICE_ID`, `REACT_APP_EMAILJS_TEMPLATE_ID`, and `REACT_APP_EMAILJS_PUBLIC_KEY`.
+1. Connect the GitHub repository to a Cloudflare Pages project named `portfolio`, with `main` as its production branch.
+2. In the Pages project, open **Settings → Build → Branch control**. Disable automatic production branch deployments and set preview branch deployments to **None** so GitHub Actions is the only deployment pipeline.
+3. Create a Cloudflare API token scoped to the account with **Cloudflare Pages: Edit** permission. In the GitHub repository, open **Settings → Secrets and variables → Actions** and set `CLOUDFLARE_API_TOKEN` to this token; `CLOUDFLARE_ACCOUNT_ID` remains the same.
+4. To enable the contact form in production, also add `REACT_APP_EMAILJS_SERVICE_ID`, `REACT_APP_EMAILJS_TEMPLATE_ID`, and `REACT_APP_EMAILJS_PUBLIC_KEY`.
 
-The workflow installs the locked dependencies, builds the app into `build/`, then deploys that directory using `wrangler.jsonc`. Keep API tokens in GitHub Secrets, never in the repository.
+The workflow installs the locked dependencies, builds the app into `build/`, then runs `wrangler pages deploy` for that directory. Keep API tokens in GitHub Secrets, never in the repository.
+
+The first deployment is available at `https://portfolio.pages.dev`. Connecting `duypt14.is-a.dev` is a separate step: update its is-a.dev CNAME to this Pages hostname, submit the required PR to `is-a-dev/register`, and associate the custom domain with the Pages project using the [is-a.dev Cloudflare Pages guide](https://docs.is-a.dev/guides/cloudflare-pages/). Do not change the existing Vercel record until the Pages deployment is verified.
 
 ---
 
